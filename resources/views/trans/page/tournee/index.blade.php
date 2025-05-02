@@ -77,13 +77,13 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
+                                                <th>Camion favoris</th>
+                                                <th>Chauffeur favoris</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
-                                                <th>Etape actuelle</th>
+                                                <th>Créée le</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -101,7 +101,11 @@
                                                         <td>{{ $tournee['numerobl'] }}</td>
                                                         <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['derniere_etape']['postion'] ?? 'N/A' }}</td>
+                                                         @php
+                                                            $createdAt = \Carbon\Carbon::parse($tournee['created_at']);
+                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
+                                                         @endphp
+                                                        <td>{{ $formattedDate }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
                                                                 <a href="" class="btn btn-sm btn-info"
@@ -115,7 +119,7 @@
                                                                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
-                                                                <button type="button" class="btn btn-sm btn-success" onclick="showAlert()" title="Démarrer cette tournée">
+                                                                <button type="button" class="btn btn-sm btn-success"  onclick="showAlertStart('{{ $tournee['keytournee'] }}')" title="Démarrer cette tournée">
                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
                                                                          <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
                                                                          <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
@@ -130,13 +134,13 @@
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
+                                                <th>Camion favoris</th>
+                                                <th>Chauffeur favoris</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
-                                                <th>Etape actuelle</th>
+                                                <th>Créée le</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </tfoot>
@@ -173,6 +177,7 @@
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
+                                                <th>Démarréée le</th>
                                                 <th>Etape actuelle</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
@@ -191,7 +196,12 @@
                                                         <td>{{ $tournee['numerobl'] }}</td>
                                                         <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['derniere_etape']['postion'] ?? 'N/A' }}</td>
+                                                        @php
+                                                            $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
+                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
+                                                        @endphp
+                                                        <td>{{ $formattedDate }}</td>
+                                                        <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
                                                                 <a href="" class="btn btn-sm btn-info"
@@ -210,17 +220,11 @@
                                                                         <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                                                                     </svg>
                                                                 </a>
-                                                                <a href="" class="btn btn-sm btn-danger"
-                                                                    title="Clôturer cette tournée">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                        height="16" fill="currentColor"
-                                                                        class="bi bi-check2-circle" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
-                                                                        <path
-                                                                            d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
-                                                                    </svg>
-                                                                </a>
+                                                                <button type="button" class="btn btn-sm btn-danger"  onclick="showAlertEnd('{{ $tournee['keytournee'] }}')" title="Clôturer cette tournée">
+                                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                                                  </svg>
+                                                                </button>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -236,6 +240,7 @@
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
+                                                <th>Démarréée le</th>
                                                 <th>Etape actuelle</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
@@ -243,7 +248,6 @@
                                     </table>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </template>
@@ -259,13 +263,14 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
+                                                <th>Camion finaliste</th>
+                                                <th>Chauffeur finaliste</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
-                                                <th>Etape actuelle</th>
+                                                <th>Clôturéée le</th>
+                                                <th>Dernière étape</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -283,7 +288,12 @@
                                                         <td>{{ $tournee['numerobl'] }}</td>
                                                         <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['derniere_etape']['postion'] ?? 'N/A' }}</td>
+                                                        @php
+                                                            $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
+                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
+                                                        @endphp
+                                                        <td>{{ $formattedDate }}</td>
+                                                         <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
                                                                 <a href="" class="btn btn-sm btn-info"
@@ -317,13 +327,14 @@
                                         <tfoot>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
+                                                <th>Camion finaliste</th>
+                                                <th>Chauffeur finaliste</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
                                                 <th>Lieu départ</th>
                                                 <th>Lieu arrivé</th>
-                                                <th>Etape actuelle</th>
+                                                <th>Clôturéée le</th>
+                                                <th>Dernière étape</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
                                         </tfoot>
@@ -339,7 +350,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    async function showAlert() {
+    // Pour démarrer une tournée
+    async function showAlertStart(keytournee) {
         const steps = ['1', '2', '3'];
         const swalQueueStep = Swal.mixin({
             confirmButtonText: 'Suivant →',
@@ -354,70 +366,201 @@
 
         const values = {};
 
-        // Étape 1 : Position actuelle
-        const positionResult = await swalQueueStep.fire({
-            title: 'Position actuelle',
-            text: 'Veuillez entrer votre position actuelle',
-            input: 'text',
-            inputAttributes: {
-                placeholder: 'Position actuelle',
-                required: true,
-                name: 'postion',
-            },
-            showCancelButton: false,
-            currentProgressStep: 0,
-        });
+        try {
+            const positionResult = await swalQueueStep.fire({
+                title: 'Position actuelle',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Position actuelle',
+                    required: true,
+                    name: 'postion',
+                },
+                currentProgressStep: 0,
+            });
 
-        if (positionResult.value) {
+            if (!positionResult.value) return;
             values.position = positionResult.value;
 
-            // Étape 2 : Latitude
             const latitudeResult = await swalQueueStep.fire({
                 title: 'Latitude',
-                text: 'Veuillez entrer la latitude trouvée',
                 input: 'text',
                 inputAttributes: {
                     placeholder: 'Latitude',
                     required: true,
-                    name: 'laltitude',
+                    name: 'latitude',
                 },
-                showCancelButton: false,
                 currentProgressStep: 1,
             });
 
-            if (latitudeResult.value) {
-                values.latitude = latitudeResult.value;
+            if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Veuillez entrer une latitude valide (entre -90 et 90)',
+                });
+                return;
+            }
+            values.latitude = parseFloat(latitudeResult.value);
 
-                // Étape 3 : Longitude
-                const longitudeResult = await swalQueueStep.fire({
-                    title: 'Longitude',
-                    text: 'Veuillez entrer la longitude trouvée',
-                    input: 'text',
-                    inputAttributes: {
-                        placeholder: 'Longitude',
-                        required: true,
-                        name: 'longitude',
-                    },
-                    showCancelButton: false,
-                    currentProgressStep: 2,
+            const longitudeResult = await swalQueueStep.fire({
+                title: 'Longitude',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Longitude',
+                    required: true,
+                    name: 'longitude',
+                },
+                currentProgressStep: 2,
+            });
+
+            if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Veuillez entrer une longitude valide (entre -180 et 180)',
+                });
+                return;
+            }
+            values.longitude = parseFloat(longitudeResult.value);
+
+            const confirmation = await Swal.fire({
+                title: 'Êtes-vous sûr de vouloir commencer cette tournée ?',
+                padding: '2em',
+                confirmButtonText: 'Oui, démarrer',
+                showCancelButton: true,
+                cancelButtonText: 'Annuler',
+            });
+
+            if (confirmation.isConfirmed) {
+                const result = await demarrerTournee(keytournee, values);
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Tournée démarrée avec succès !',
+                    timer: 1500,
+                    showConfirmButton: false
                 });
 
-                if (longitudeResult.value) {
-                    values.longitude = longitudeResult.value;
-
-                    // Récapitulatif
-                    Swal.fire({
-                        title: 'Êtes-vous sûr de vouloir commencer cette tournée ?',
-                        padding: '2em',
-                        html: `
-                            <br>Position actuelle : <strong>${values.position}</strong><br>
-                            Latitude : <strong>${values.latitude}</strong><br>
-                            Longitude : <strong>${values.longitude}</strong>
-                        `,
-                        confirmButtonText: 'Oui',
-                    });
-                }
+                window.location.reload();
             }
+
+        } catch (error) {
+            const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: message,
+            });
+        }
+    }
+
+    // Pour va vérification de la longitude et latitude
+    function isValidCoordinate(value) {
+        const number = parseFloat(value);
+        return !isNaN(number) && ((value.includes('.') || value.includes(',')) ? (number >= -90 && number <= 90) : (number >= -180 && number <= 180));
+    }
+
+    // Pour clôturer une tournée
+    async function showAlertEnd(keytournee) {
+        const steps = ['1', '2', '3'];
+        const swalQueueStep = Swal.mixin({
+            confirmButtonText: 'Suivant →',
+            showCancelButton: false,
+            progressSteps: steps,
+            inputAttributes: {
+                required: true,
+            },
+            validationMessage: 'Ce champ est obligatoire',
+            padding: '2em',
+        });
+
+        const values = {};
+
+        try {
+            const positionResult = await swalQueueStep.fire({
+                title: 'Position actuelle',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Position actuelle',
+                    required: true,
+                    name: 'postion',
+                },
+                currentProgressStep: 0,
+            });
+
+            if (!positionResult.value) return;
+            values.position = positionResult.value;
+
+            const latitudeResult = await swalQueueStep.fire({
+                title: 'Latitude',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Latitude',
+                    required: true,
+                    name: 'latitude',
+                },
+                currentProgressStep: 1,
+            });
+
+            if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Veuillez entrer une latitude valide (entre -90 et 90)',
+                });
+                return;
+            }
+            values.latitude = parseFloat(latitudeResult.value);
+
+            const longitudeResult = await swalQueueStep.fire({
+                title: 'Longitude',
+                input: 'text',
+                inputAttributes: {
+                    placeholder: 'Longitude',
+                    required: true,
+                    name: 'longitude',
+                },
+                currentProgressStep: 2,
+            });
+
+            if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Veuillez entrer une longitude valide (entre -180 et 180)',
+                });
+                return;
+            }
+            values.longitude = parseFloat(longitudeResult.value);
+
+            const confirmation = await Swal.fire({
+                title: 'Êtes-vous sûr de vouloir clôturer cette tournée ?',
+                padding: '2em',
+                confirmButtonText: 'Oui, clôturer',
+                showCancelButton: true,
+                cancelButtonText: 'Annuler',
+            });
+
+            if (confirmation.isConfirmed) {
+                const result = await cloturerTournee(keytournee, values);
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Tournée clôturée avec succès !',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+
+                window.location.reload();
+            }
+
+        } catch (error) {
+            const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: message,
+            });
         }
     }
 </script>

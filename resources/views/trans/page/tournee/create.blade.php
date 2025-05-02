@@ -83,7 +83,7 @@
                                         class="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-[#e0e6ed] dark:border-[#17263c] dark:bg-[#1b2e4b]">
                                         Kg</div>
                                     <input type="text" name="poids" id="poids"
-                                        placeholder="Entrer le de chargement" oninput="validateInput()"
+                                        placeholder="Ex: 2504.15" oninput="validateInput()"
                                         class="form-input ltr:rounded-l-none rtl:rounded-r-none flex-1" required />
                                 </div>
                             </div>
@@ -107,14 +107,20 @@
 
         </div>
     </div>
-    <script>
-        function validateInput() {
-            const input = document.getElementById('poids');
-            input.value = input.value.replace(/[^0-9]/g, '');
+   <script>
+       function validateInput() {
+           const input = document.getElementById('poids');
+           input.value = input.value.replace(/[^0-9.]/g, '');
 
-            if (input.value.length > 10) {
-                input.value = input.value.substring(0, 10);
-            }
-        }
-    </script>
+           if (input.value.length > 10) {
+               input.value = input.value.substring(0, 10);
+           }
+
+           const parts = input.value.split('.');
+           if (parts.length > 2) {
+               input.value = parts[0] + '.' + parts[1];
+           }
+       }
+   </script>
+
 @endsection

@@ -5,6 +5,8 @@ import { fetchFretsAttribues } from './api/frets';
 //import { fetchTournees } from './api/tournees';
 import { getRessourcesDisponibles } from './api/tournees';
 import { store } from './api/tournees';
+import { demarrerTournee } from './api/etapes';
+import { cloturerTournee } from './api/etapes';
 
 // Pour la notification
 function showMessage(msg = 'Notification.', position = 'top-end', type = 'success', duration = 5000) {
@@ -299,3 +301,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Pour démarrer une tournée
+window.demarrerTournee = demarrerTournee;
+
+// Pour clôturer une tournée
+window.cloturerTournee = cloturerTournee;
+
