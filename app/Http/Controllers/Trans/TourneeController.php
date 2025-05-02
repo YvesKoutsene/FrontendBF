@@ -16,7 +16,6 @@ class TourneeController extends Controller
         if ($response->successful()) {
             $data = $response->json();
 
-            // Vérifiez si les clés existent dans la réponse
             $tournees = $data['tournees'] ?? []; //
             $fret = $data['fret'] ?? []; //
 
@@ -36,5 +35,10 @@ class TourneeController extends Controller
         return view('trans.page.tournee.create', compact('keyfret', 'numerodossier', 'idlieuChargement','lieuChargement', 'idlieuDechargement', 'lieuDechargement'));
     }
 
+    // Fonction pour renvoyer la page index des étapes d'une tournée
+    public function indexEtapes($key, $num)
+    {
+        return view('trans.page.etape.index', ['keytournee' => $key, 'numerobl' => $num]);
+    }
 
 }

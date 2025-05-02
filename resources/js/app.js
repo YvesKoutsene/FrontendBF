@@ -7,6 +7,7 @@ import { getRessourcesDisponibles } from './api/tournees';
 import { store } from './api/tournees';
 import { demarrerTournee } from './api/etapes';
 import { cloturerTournee } from './api/etapes';
+import { fetchEtapesTournee } from './api/etapes';
 
 // Pour la notification
 function showMessage(msg = 'Notification.', position = 'top-end', type = 'success', duration = 5000) {
@@ -187,16 +188,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-   // Remplir le select des chauffeurs
     const chauffeurSelect = document.querySelector('#chauffeurs-select');
     if (chauffeurSelect) {
-        let hasChauffeurs = false; // Indicateur pour vérifier si des chauffeurs existent
+        let hasChauffeurs = false;
 
         ressources.chauffeurs.forEach(chauffeur => {
             const option = document.createElement('option');
             option.value = chauffeur.id;
 
-            // Vérifie si nom et prenom existent avant de les concaténer
             const nomPrenom = [];
             if (chauffeur.nom) {
                 nomPrenom.push(chauffeur.nom);
@@ -205,33 +204,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                 nomPrenom.push(chauffeur.prenom);
             }
 
-            // Si nomPrenom n'est pas vide, on les rejoint pour l'affichage
             if (nomPrenom.length > 0) {
                 option.textContent = nomPrenom.join(' ');
                 chauffeurSelect.appendChild(option);
-                hasChauffeurs = true; // On a trouvé au moins un chauffeur
+                hasChauffeurs = true;
             }
         });
 
-        // Si aucun chauffeur n'est trouvé, afficher un message
         if (!hasChauffeurs) {
             const option = document.createElement('option');
             option.textContent = 'Aucun chauffeur disponible';
-            option.disabled = true; // Option non sélectionnable
+            option.disabled = true;
             chauffeurSelect.appendChild(option);
         }
     }
 
-    // Remplir le select des camions
     const camionSelect = document.querySelector('#camions-select');
     if (camionSelect) {
-        let hasCamions = false; // Indicateur pour vérifier si des camions existent
+        let hasCamions = false;
 
         ressources.camions.forEach(camion => {
             const option = document.createElement('option');
             option.value = camion.id;
 
-            // Vérifie si plaque1 ou plaque2 existe avant de les concaténer
             const plaques = [];
             if (camion.plaque1) {
                 plaques.push(camion.plaque1);
@@ -240,19 +235,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 plaques.push(camion.plaque2);
             }
 
-            // Si plaques n'est pas vide, on les rejoint pour l'affichage
             if (plaques.length > 0) {
                 option.textContent = plaques.join(' / ');
                 camionSelect.appendChild(option);
-                hasCamions = true; // On a trouvé au moins un camion
+                hasCamions = true;
             }
         });
 
-        // Si aucun camion n'est trouvé, afficher un message
         if (!hasCamions) {
             const option = document.createElement('option');
             option.textContent = 'Aucun camion disponible';
-            option.disabled = true; // Option non sélectionnable
+            option.disabled = true;
             camionSelect.appendChild(option);
         }
     }
@@ -308,3 +301,50 @@ window.demarrerTournee = demarrerTournee;
 // Pour clôturer une tournée
 window.cloturerTournee = cloturerTournee;
 
+// Pour la récupération des étapes d'une tournée
+function afficherEtapesDansLeDOM(etapes) {
+    const tbody = document.getElementById('etapes-body');
+    tbody.innerHTML = '';
+
+    etapes.forEach((etape, index) => {
+    const row = document.createElement('tr');
+
+    const createdAt = new Date(etape.dateposition);
+    const formattedDate = `${createdAt.getDate().toString().padStart(2,
+    '0')}/${(createdAt.getMonth()+1).toString().padStart(2, '0')}/${createdAt.getFullYear()} à
+    ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}`;
+
+    row.innerHTML = `
+    <td>${index + 1}</td>
+    <td>${etape.position}</td>
+    <td>${etape.latitude}</td>
+    <td>${etape.longitude}</td>
+    <td>${formattedDate}</td>
+    <td class="text-center">
+        <div class="flex justify-center gap-2">
+            <a href="" class="btn btn-sm btn-primary" title="Modifier tournée">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                    <path
+                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd"
+                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                </svg>
+            </a>
+            <a href="" class="btn btn-sm btn-outline-danger" title="Supprimer cette tournee">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                </svg>
+            </a>
+        </div>
+    </td>
+    `;
+    tbody.appendChild(row);
+    });
+}
+document.addEventListener('DOMContentLoaded', async () => {
+    const etapes = await fetchEtapesTournee();
+    afficherEtapesDansLeDOM(etapes);
+});

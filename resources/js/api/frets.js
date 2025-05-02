@@ -1,5 +1,6 @@
 import { API_BASE_URL } from './config.js';
 
+// Fonction d'appel des frets attribués au transporteur connecté
 export async function fetchFretsAttribues() {
     try {
         const utilisateurData = localStorage.getItem('utilisateur');
@@ -37,10 +38,8 @@ export async function fetchFretsAttribues() {
             return [];
         }
 
-        // On récupère la réponse en texte brut
         const text = await response.text();
 
-        // Si la réponse est vide, on retourne un tableau vide
         if (!text) {
             console.warn("Réponse vide du serveur.");
             return [];
@@ -54,7 +53,6 @@ export async function fetchFretsAttribues() {
             return [];
         }
 
-        // Retour des frets attribués si disponibles
         console.log("Frets attribués récupérés :", data.frets);
         return data.frets || [];
 

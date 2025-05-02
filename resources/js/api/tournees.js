@@ -11,7 +11,7 @@ import { API_BASE_URL } from './config.js';
         }
 
         // Appel à l'API pour récupérer les tournées du fret
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/b8a278b5-992d-4862-812d-6d44d02e7715`, {
+        const response = await fetch(`${API_BASE_URL}/tournees-fret/${keyfret}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,

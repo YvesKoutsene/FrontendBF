@@ -16,10 +16,8 @@
                     class="mb-5 overflow-y-auto whitespace-nowrap border-b border-[#ebedf2] font-semibold dark:border-[#191e3a] sm:flex">
                     <li class="inline-block">
                         <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                            :class="{ '!border-primary text-primary': tab == 'en-attente' }" @click="tab='en-attente'">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                            class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary" :class="{ '!border-primary text-primary': tab == 'en-attente' }" @click="tab='en-attente'">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="12" cy="12" r="10" stroke="#FFA500" stroke-width="2" />
                                 <line x1="12" y1="8" x2="12" y2="12" stroke="#FFA500"
                                     stroke-width="2" />
