@@ -8,6 +8,7 @@ import { store } from './api/tournees';
 import { demarrerTournee } from './api/etapes';
 import { cloturerTournee } from './api/etapes';
 import { fetchEtapesTournee } from './api/etapes';
+import { fetchTourneeEncours } from './api/tournees';
 
 // Pour la notification
 function showMessage(msg = 'Notification.', position = 'top-end', type = 'success', duration = 5000) {
@@ -347,4 +348,81 @@ function afficherEtapesDansLeDOM(etapes) {
 document.addEventListener('DOMContentLoaded', async () => {
     const etapes = await fetchEtapesTournee();
     afficherEtapesDansLeDOM(etapes);
+});
+
+// Pour la récupération des tournées en cours d'un fret
+document.addEventListener('DOMContentLoaded', async () => {
+    const keyfret = window.keyfret;
+    const container = document.getElementById('tournees-container');
+
+    if (!keyfret) {
+        console.error("Clé de fret manquante.");
+        return;
+    }
+
+    const tournees = await fetchTourneeEncours(keyfret);
+
+    tournees.forEach((tournee, index) => {
+        // Formatage des dates
+        const dateDepart = tournee.datedepart ? new Date(tournee.datedepart).toLocaleDateString('fr-FR') : '';
+        const dateArrivee = tournee.datearrivee ? new Date(tournee.datearrivee).toLocaleDateString('fr-FR') : '';
+
+        const html = `
+            <div class="space-y-5 border-b pb-6 p-4 bg-gray-100 rounded-lg shadow-md">
+                <h5 class="text-lg font-semibold dark:text-white-light text-center">Tournée #${index + 1}</h5>
+                <input type="hidden" name="tournee_ids[]" value="${tournee.id}">
+
+                <h5 class="text-lg font-semibold dark:text-white-light">Informations de la tournée</h5>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label>Départ prévue</label>
+                        <input type="text" class="form-input disabled:pointer-events-none" value="${dateDepart}" readonly />
+                        <input type="hidden" name="datedepart[]" value="${tournee.datedepart ?? ''}" />
+                    </div>
+                    <div>
+                        <label>Arrivée prévue</label>
+                        <input type="text" class="form-input disabled:pointer-events-none" value="${dateArrivee}" readonly />
+                        <input type="hidden" name="datearrivee[]" value="${tournee.datearrivee ?? ''}" />
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label>Poids du chargement</label>
+                        <div class="flex">
+                            <div class="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-[#e0e6ed] dark:border-[#17263c] dark:bg-[#1b2e4b]">
+                                Kg
+                            </div>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.poids ?? ''}" readonly />
+                            <input type="hidden" name="poids[]" value="${tournee.poids ?? ''}" />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Position actuelle</label>
+                        <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.derniere_etape.position ?? ''}" readonly />
+                        <input type="hidden" name="etape[]" value="${tournee.derniere_etape.position ?? ''}" />
+                    </div>
+                </div>
+                <h5 class="text-lg font-semibold dark:text-white-light">Nouvelle étape</h5>
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <div class="md:col-span-2">
+                        <label>Position<span class="text-danger">*</span></label>
+                        <input type="text" name="position[]" placeholder="Ex: Nukafu" class="form-input" required />
+                    </div>
+                    <div>
+                        <label>Latitude<span class="text-danger">*</span></label>
+                        <input type="text" name="latitude[]" placeholder="Ex: 6.12298" class="form-input" required />
+                    </div>
+                    <div>
+                        <label>Longitude<span class="text-danger">*</span></label>
+                        <input type="text" name="longitude[]" placeholder="Ex: 1.206709" class="form-input" required />
+                    </div>
+                </div>
+                <small class="text-muted">
+                    <span class="text-danger">NB: * Champs obligatoires pour ajouter une nouvelle étape</span>
+                </small>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', html);
+    });
 });

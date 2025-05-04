@@ -41,4 +41,11 @@ class TourneeController extends Controller
         return view('trans.page.etape.index', ['keytournee' => $key, 'numerobl' => $num]);
     }
 
+    // Fonction pour renvoyer la page d'ajout d'étapes d'un fret
+    public function createEtapes($key, $num)
+    {
+        return view('trans.page.etape.create', ['keyfret' => $key, 'numerodossier' => $num]);
+    }
+
+
 }

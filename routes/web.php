@@ -24,7 +24,6 @@ Route::get('/', function () {
     return view('trans.page.dashboard');
 })->name('dashboard');
 
-
 // Route de renvoie de la page de connexion
 Route::get('/espace/trans/connexion', [AuthController::class, 'loginpage'])->name('connexion');
 
@@ -43,6 +42,10 @@ Route::get('/espace/trans/tournees-fret/{key}', [TourneeController::class, 'inde
 // Route de renvoie de la page d'ajout de tournées
 Route::get('/espace/trans/ajouter-tournee/{keyfret}/{numerodossier}/{idlieuChargement}/{lieuChargement}/{idlieuDechargement}/{lieuDechargement}', [TourneeController::class, 'create'])->name('tournee.create');
 
-// Fonction de renvoie de la page des étapes d'une tournées
-Route::get('/espace/trans/tournees-fret/etapes/{key}/{num}', [TourneeController::class, 'indexEtapes'])->name('etapes.index');
+// Route de renvoie de la page des étapes d'une tournées
+Route::get('/espace/trans/tournees-fret/etapes/index/{key}/{num}', [TourneeController::class, 'indexEtapes'])->name('etape.index');
+
+// Route de renvoie de la page d'ajout d'étapes d'un fret
+Route::get('/espace/trans/tournees-fret/etapes/create/{key}/{num}', [TourneeController::class, 'createEtapes'])->name('etape.create');
+
 

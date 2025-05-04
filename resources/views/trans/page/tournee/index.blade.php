@@ -61,8 +61,7 @@
                     <div>
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en attente du fret N°
-                                    {{ $fret['numerodossier'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en attente du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }} </h5>
                                 <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerodossier'], $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
                                     class="btn btn-primary">
                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
@@ -81,8 +80,8 @@
                                                 <th>Chauffeur favoris</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Créée le</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
@@ -99,8 +98,14 @@
                                                             {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['poids'] }}</td>
                                                         <td>{{ $tournee['numerobl'] }}</td>
-                                                        <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
+                                                        @php
+                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
+                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
+                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
+                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
+                                                        @endphp
+                                                        <td>{{ $formattedDate1 }}</td>
+                                                        <td>{{ $formattedDate2 }}</td>
                                                          @php
                                                             $createdAt = \Carbon\Carbon::parse($tournee['created_at']);
                                                             $formattedDate = $createdAt->format('d/m/Y à H:i');
@@ -142,8 +147,8 @@
                                                 <th>Chauffeur favoris</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Créée le</th>
                                                 <th class="text-center">Actions</th>
                                             </tr>
@@ -158,9 +163,8 @@
                     <div>
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en cours du fret N°
-                                    {{ $fret['numerodossier'] ?? 'N/A' }}</h5>
-                                <a href="" class="btn btn-primary">
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en cours du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <a href="{{ route('etape.create',  [$fret['keyfret'], $fret['numerodossier']] ) }}" class="btn btn-primary">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
                                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -179,8 +183,8 @@
                                                 <th>Chauffeur actif</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Démarrée le</th>
                                                 <th>Etape actuelle</th>
                                                 <th class="text-center">Actions</th>
@@ -198,8 +202,16 @@
                                                             {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['poids'] }}</td>
                                                         <td>{{ $tournee['numerobl'] }}</td>
-                                                        <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
+                                                        <!--<td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
+                                                        <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>-->
+                                                        @php
+                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
+                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
+                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
+                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
+                                                        @endphp
+                                                        <td>{{ $formattedDate1 }}</td>
+                                                        <td>{{ $formattedDate2 }}</td>
                                                         @php
                                                             $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
                                                             $formattedDate = $createdAt->format('d/m/Y à H:i');
@@ -222,7 +234,7 @@
                                                                       <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                                     </svg>
                                                                 </a>
-                                                                <a href="{{ route('etapes.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
+                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                                                         <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                                                                     </svg>
@@ -245,8 +257,8 @@
                                                 <th>Chauffeur actif</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Démarrée le</th>
                                                 <th>Etape actuelle</th>
                                                 <th class="text-center">Actions</th>
@@ -262,7 +274,7 @@
                     <div class="switch">
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées clôturées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées clôturées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
                             </div>
                             <div class="mb-5">
                                 <div class="table-responsive">
@@ -274,8 +286,8 @@
                                                 <th>Chauffeur finaliste</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Clôturéée le</th>
                                                 <th>Dernière étape</th>
                                                 <th class="text-center">Actions</th>
@@ -293,8 +305,14 @@
                                                             {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
                                                         <td>{{ $tournee['poids'] }}</td>
                                                         <td>{{ $tournee['numerobl'] }}</td>
-                                                        <td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>
+                                                        @php
+                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
+                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
+                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
+                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
+                                                        @endphp
+                                                        <td>{{ $formattedDate1 }}</td>
+                                                        <td>{{ $formattedDate2 }}</td>
                                                         @php
                                                             $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
                                                             $formattedDate = $createdAt->format('d/m/Y à H:i');
@@ -310,7 +328,7 @@
                                                                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
-                                                                <a href="{{ route('etapes.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
+                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                                                       <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                                                                     </svg>
@@ -334,8 +352,8 @@
                                                 <th>Chauffeur finaliste</th>
                                                 <th>Poids(Kg)</th>
                                                 <th>Numero Bl</th>
-                                                <th>Lieu départ</th>
-                                                <th>Lieu arrivé</th>
+                                                <th>Départ prévue</th>
+                                                <th>Arrivée prévue</th>
                                                 <th>Clôturéée le</th>
                                                 <th>Dernière étape</th>
                                                 <th class="text-center">Actions</th>
