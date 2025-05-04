@@ -9,6 +9,7 @@ import { demarrerTournee } from './api/etapes';
 import { cloturerTournee } from './api/etapes';
 import { fetchEtapesTournee } from './api/etapes';
 import { fetchTourneeEncours } from './api/tournees';
+import { storeEtapes } from './api/etapes';
 
 // Pour la notification
 function showMessage(msg = 'Notification.', position = 'top-end', type = 'success', duration = 5000) {
@@ -282,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     form.reset();
                     window.location.reload();
-                }, 3000);
+                }, 2000);
             } catch (error) {
                 let messageErreur = 'Une erreur est survenue lors de l’enregistrement.';
 
@@ -363,7 +364,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tournees = await fetchTourneeEncours(keyfret);
 
     tournees.forEach((tournee, index) => {
-        // Formatage des dates
         const dateDepart = tournee.datedepart ? new Date(tournee.datedepart).toLocaleDateString('fr-FR') : '';
         const dateArrivee = tournee.datearrivee ? new Date(tournee.datearrivee).toLocaleDateString('fr-FR') : '';
 
@@ -406,23 +406,78 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     <div class="md:col-span-2">
                         <label>Position<span class="text-danger">*</span></label>
-                        <input type="text" name="position[]" placeholder="Ex: Nukafu" class="form-input" required />
+                        <input type="text" name="position[]" placeholder="Ex: Nukafu" class="form-input"/>
                     </div>
                     <div>
                         <label>Latitude<span class="text-danger">*</span></label>
-                        <input type="text" name="latitude[]" placeholder="Ex: 6.12298" class="form-input" required />
+                        <input type="text" name="latitude[]" placeholder="Ex: 6.12298" class="form-input"/>
                     </div>
                     <div>
                         <label>Longitude<span class="text-danger">*</span></label>
-                        <input type="text" name="longitude[]" placeholder="Ex: 1.206709" class="form-input" required />
+                        <input type="text" name="longitude[]" placeholder="Ex: 1.206709" class="form-input" />
                     </div>
                 </div>
-                <small class="text-muted">
-                    <span class="text-danger">NB: * Champs obligatoires pour ajouter une nouvelle étape</span>
-                </small>
+
             </div>
         `;
 
         container.insertAdjacentHTML('beforeend', html);
+    });
+});
+
+// Pour ajouter les étapes des tournées en cours d'un fret
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('addetape-form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const tourneesContainer = document.getElementById('tournees-container');
+        const blocks = tourneesContainer.querySelectorAll('div.space-y-5.border-b');
+
+        // On utilise une Map pour grouper les étapes par tournee_id
+        const groupedEtapes = new Map();
+
+        blocks.forEach((block) => {
+            const tournee_id = block.querySelector('input[name="tournee_ids[]"]')?.value;
+            const position = block.querySelector('input[name="position[]"]')?.value;
+            const latitude = block.querySelector('input[name="latitude[]"]')?.value;
+            const longitude = block.querySelector('input[name="longitude[]"]')?.value;
+
+            if (tournee_id && position && latitude && longitude) {
+                const etape = {
+                    position,
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude)
+                };
+
+                if (!groupedEtapes.has(tournee_id)) {
+                    groupedEtapes.set(tournee_id, []);
+                }
+
+                groupedEtapes.get(tournee_id).push(etape);
+            }
+        });
+
+        if (groupedEtapes.size === 0) {
+            showMessage('Veuillez remplir au moins une étape.', 'top-end', 'error');
+            return;
+        }
+
+        const donneesEtapes = Array.from(groupedEtapes.entries()).map(([tournee_id, etapes]) => ({
+            tournee_id: parseInt(tournee_id),
+            etapes
+        }));
+        const result = await storeEtapes(donneesEtapes);
+
+        if (result.success) {
+            showMessage('Étapes enregistrées avec succès !');
+            setTimeout(() => {
+                form.reset();
+                window.location.reload();
+            }, 2000);
+        } else {
+            showMessage(result.message || 'Erreur lors de l’enregistrement.', 'top-end', 'error');
+        }
     });
 });

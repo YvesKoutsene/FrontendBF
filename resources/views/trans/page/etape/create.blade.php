@@ -25,13 +25,14 @@
                         @csrf
                         <div id="tournees-container" class="space-y-5">
                         </div>
-
+                        <small class="text-muted flex space-x-4 mt-6">
+                            <span class="text-danger">NB: * Champs obligatoires pour ajouter une nouvelle étape</span>
+                        </small>
                         <div class="flex space-x-4 justify-end items-end mt-6">
                             <button type="reset" class="btn btn-warning">Réinitialiser</button>
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

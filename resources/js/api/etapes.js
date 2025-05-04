@@ -91,7 +91,7 @@ export async function fetchEtapesTournee($keytournee) {
         }
 
         // Appel à l'API pour récupérer les étapes du fret
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/${keytournee}`, {
+        const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/index/${keytournee}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -140,4 +140,50 @@ export async function fetchEtapesTournee($keytournee) {
 }
 
 // Fonction permattant d'ajouter les étapes des tournées d'un fret
+export async function storeEtapes(donneesEtapes) {
+    try {
+        const authToken = localStorage.getItem('auth_token');
 
+        if (!authToken) {
+            console.error('Token manquant.');
+            return {
+                success: false,
+                message: 'Token d\'authentification manquant.'
+            };
+        }
+
+        const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/store`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + authToken,
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content
+            },
+            body: JSON.stringify({
+                etapes: donneesEtapes
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                status: response.status,
+                message: data.message || 'Une erreur s\'est produite.',
+                errors: data.errors || null
+            };
+        }
+
+        return {
+            success: true,
+            data: data
+        };
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message || 'Erreur de connexion au serveur.'
+        };
+    }
+}
