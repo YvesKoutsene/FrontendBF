@@ -1,31 +1,25 @@
 @extends('trans.include.layouts.app')
 @section('content')
     <div>
-        <ol class="flex text-primary font-semibold dark:text-white-dark">
-            <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="javascript:;"
-                    class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Frets</a>
-            </li>
-            <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a
-                    class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Liste
-                    des tournées</a></li>
-            <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a href="{{ route('fret') }}"
-                    class="p-1.5 px-3 ltr:pl-6 rtl:pr-6 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Liste
-                    des frets</a></li>
+        <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
+            <li><a href="">Frets</a></li>
+            <li  class="before:content-['/'] before:px-1.5"><a href="{{ route('fret') }}">Liste des frets</a></li>
+            <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Liste des tournées</a></li>
         </ol>
+
         <div class="pt-5">
             <div x-data="{ tab: 'en-attente' }">
                 <ul
                     class="mb-5 overflow-y-auto whitespace-nowrap border-b border-[#ebedf2] font-semibold dark:border-[#191e3a] sm:flex">
                     <li class="inline-block">
-                        <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                            :class="{ '!border-primary text-primary': tab == 'en-attente' }" @click="tab='en-attente'">
+                        <a href="javascript:;" class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning"
+                            :class="{ '!border-warning text-warning': tab == 'en-attente' }" @click="tab='en-attente'">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="#FFA500" stroke-width="2" />
-                                <line x1="12" y1="8" x2="12" y2="12" stroke="#FFA500"
+                                <circle cx="12" cy="12" r="10" stroke="#008CBA" stroke-width="2" />
+                                <line x1="12" y1="8" x2="12" y2="12" stroke="#008CBA"
                                     stroke-width="2" />
-                                <line x1="12" y1="16" x2="12" y2="16" stroke="#FFA500"
+                                <line x1="12" y1="16" x2="12" y2="16" stroke="#008CBA"
                                     stroke-width="2" />
                             </svg>
                             En attente
@@ -33,8 +27,7 @@
                     </li>
                     <li class="inline-block">
                         <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                            :class="{ '!border-primary text-primary': tab == 'en-cours' }" @click="tab='en-cours'">
+                            class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning" :class="{ '!border-warning text-warning': tab == 'en-cours' }" @click="tab='en-cours'">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -47,29 +40,53 @@
                     </li>
                     <li class="inline-block">
                         <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-primary hover:text-primary"
-                            :class="{ '!border-primary text-primary': tab == 'cloturees' }" @click="tab='cloturees'">
+                            class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning"
+                            :class="{ '!border-warning text-warning': tab == 'cloturees' }" @click="tab='cloturees'">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.59-11.59L22 6l-13 13z" fill="#4CAF50" />
+                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.59-11.59L22 6l-13 13z" fill="#008CBA" />
                             </svg>
                             Clôturées
                         </a>
                     </li>
                 </ul>
+
+                <div class="mb-5 flex items-center justify-center">
+                    <h5 class="text-lg font-semibold dark:text-white-light">
+                        Nombre de tournées créées : {{ $nombreTournees }} / {{ $fret['nombrecamions'] ?? 'N/A' }}
+                    </h5>
+                </div>
+
                 <template x-if="tab === 'en-attente'">
                     <div>
                         <div class="panel">
-                            <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en attente du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }} </h5>
-                                <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerodossier'], $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
-                                    class="btn btn-primary">
-                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
-                                     <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
-                                   </svg>
-                                    Créer une tournée
-                                </a>
-                            </div>
+                            @if($nombreTournees !== ($fret['nombrecamions'] ?? 0))
+                                <div class="mb-5 flex items-center justify-between">
+                                    <h5 class="text-lg font-semibold dark:text-white-light">
+                                        Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
+                                    </h5>
+                                    <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerodossier'], $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
+                                       class="btn btn-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
+                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
+                                        </svg>
+                                        Créer une tournée
+                                    </a>
+                                </div>
+                            @else
+                                <div class="mb-5 flex items-center justify-between">
+                                    <h5 class="text-lg font-semibold dark:text-white-light">
+                                        Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
+                                    </h5>
+                                    <a href="#"
+                                       class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
+                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
+                                        </svg>
+                                        Créer une tournée
+                                    </a>
+                                </div>
+                            @endif
                             <div class="mb-5">
                                 <div class="table-responsive">
                                     <table class="table-hover" id="myTable" class="whitespace-nowrap">
@@ -163,15 +180,28 @@
                     <div>
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées en cours du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
-                                <a href="{{ route('etape.create',  [$fret['keyfret'], $fret['numerodossier']] ) }}" class="btn btn-primary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                        <path
-                                            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                    </svg>Ajouter les étapes
-                                </a>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                @if($nombreTournees == 0)
+                                    <a href="#" class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path
+                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                        </svg>
+                                        Ajouter les étapes
+                                    </a>
+                                @else
+                                    <a href="{{ route('etape.create', [$fret['keyfret'], $fret['numerodossier']]) }}" class="btn btn-warning">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path
+                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                        </svg>
+                                        Ajouter les étapes
+                                    </a>
+                                @endif
                             </div>
                             <div class="mb-5">
                                 <div class="table-responsive">
@@ -222,10 +252,8 @@
                                                             <div class="flex justify-center gap-2">
                                                                 <a href="" class="btn btn-sm btn-info" title="Voir les détails">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                                                        <path
-                                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
+                                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
                                                                 <a href="" class="btn btn-sm btn-primary" title="Modifier tournée">
@@ -274,7 +302,7 @@
                     <div class="switch">
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées clôturées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
                             </div>
                             <div class="mb-5">
                                 <div class="table-responsive">

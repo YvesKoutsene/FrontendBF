@@ -64,10 +64,9 @@
                         class="relative flex flex-col justify-center rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 px-6 lg:min-h-[758px] py-20">
                         <div class="mx-auto w-full max-w-[440px]">
                             <div class="mb-10">
-                                <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl">
-                                    Connexion</h1>
-                                <p class="text-base font-bold leading-normal text-white-dark">Connectez-vous avec vos
-                                    identifiants d'inscription</p>
+                                <img src="\assets/images/anaxar/Anaxarlogosimple.png" alt="Logo Anaxar" class="ml-[5px] w-80 flex-none"/>
+                                <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl"></h1>
+                                <p class="text-base font-bold leading-normal text-white-dark">Connectez-vous avec vos identifiants d'inscription.</p>
                             </div>
                             <form id="login-form" class="space-y-5 dark:text-white">
                                 @csrf
@@ -121,7 +120,7 @@
                                     </label>
                                 </div>
                                 <button type="submit"
-                                    class="btn btn-gradient !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
+                                    class="btn btn-warning !mt-6 w-full border-0 uppercase shadow-[0_10px_20px_-10px_rgba(67,97,238,0.44)]">
                                     Se connecter
                                 </button>
                             </form>
@@ -135,7 +134,7 @@
                             <div class="text-center dark:text-white">
                                 Vous n'avez pas de compte ?
                                 <a href="{{ route('enregistrement') }}"
-                                    class="uppercase text-primary underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
+                                    class="uppercase text-warning underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
                             </div>
                         </div>
                     </div>

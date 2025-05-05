@@ -1,11 +1,11 @@
 @extends('trans.include.layouts.app')
 @section('content')
     <div x-data="sales">
-        <!-- arrowed -->
-        <ol class="flex text-primary font-semibold dark:text-white-dark">
-            <li class="bg-[#ebedf2] rounded-tl-md rounded-bl-md dark:bg-[#1b2e4b]"><a href="javascript:;" class="p-1.5 ltr:pl-3 rtl:pr-3 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-[#ebedf2] before:z-[1] dark:before:border-l-[#1b2e4b] hover:text-primary/70 dark:hover:text-white-dark/70">Tableau de bord</a></li>
-            <li class="bg-[#ebedf2] dark:bg-[#1b2e4b]"><a class="bg-primary text-white-light p-1.5 ltr:pl-6 rtl:pr-6 ltr:pr-2 rtl:pl-2 relative  h-full flex items-center before:absolute ltr:before:-right-[15px] rtl:before:-left-[15px] rtl:before:rotate-180 before:inset-y-0 before:m-auto before:w-0 before:h-0 before:border-[16px] before:border-l-[15px] before:border-r-0 before:border-t-transparent before:border-b-transparent before:border-l-primary before:z-[1]">Acceuil</a></li>
-        </ol>
+       <!-- basic -->
+       <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
+           <li><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Tableau de bord</a></li>
+           <li class="before:content-['/'] before:px-1.5"><a href="javascript:;">Acceuil</a></li>
+       </ol>
 
         <div class="pt-5">
             <div class="mb-6 grid gap-6 xl:grid-cols-3">
