@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sessionStorage.setItem('loginMessage', 'Content de te revoir!');
 
-            window.location.href = '/';
+            window.location.href = '/espace/trans/frets';
         } catch (error) {
             showMessage(error.message || 'Erreur de connexion.', 'top-end', 'error');
         }
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         ${fret.parametresvehicule?.longueurchargement ?? '?'}m ×
                         ${fret.parametresvehicule?.largeurchargement ?? '?'}m
                     </li>
-                    <li><strong>Isolation thermique :</strong> ${fret.parametresvehicule?.isolationthermique ? '✅ Oui' : '❌ Non'}</li>
+                    <li><strong>Isolation thermique :</strong> ${fret.parametresvehicule?.isolationthermique ? 'Oui' : 'Non'}</li>
                     <li><strong>Normes sanitaires :</strong> ${fret.parametresvehicule?.normesanitaire ?? 'N/A'}</li>
                     <li><strong>Chargement :</strong> ${fret.parametresvehicule?.modechargement ?? 'N/A'}</li>
                 </ul>
@@ -661,7 +661,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <li><strong>Refroidissement :</strong> ${fret.parametresvehicule?.systemerefroidissement ?? 'N/A'}</li>
                     <li><strong>Matériau citerne :</strong> ${fret.parametresvehicule?.materiauciterne ?? 'N/A'}</li>
                     <li><strong>Capacité :</strong> ${fret.parametresvehicule?.capacitelitre ?? 'N/A'} L / ${fret.parametresvehicule?.capacitepieds ?? 'N/A'} ft</li>
-                    <li><strong>Réfrigéré :</strong> ${fret.parametresvehicule?.reefer ? '✅ Oui' : '❌ Non'}</li>
+                    <li><strong>Réfrigéré :</strong> ${fret.parametresvehicule?.reefer ? 'Oui' : 'Non'}</li>
                     <li class="col-span-2"><strong>Autre paramètre :</strong> ${fret.parametresvehicule?.autreparametre ?? 'N/A'}</li>
                 </ul>
             </div>

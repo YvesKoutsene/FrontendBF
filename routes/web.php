@@ -33,7 +33,7 @@ Route::get('/espace/trans/enregistrement', [AuthController::class, 'registerpage
 // Route de renvoie de la page de mot de passe oublié
 Route::get('/espace/trans/mot-passe-oublie', [AuthController::class, 'forgotpasswordpage'])->name('motdepasse-oublié');
 
-// Route de renvoie de la page des frets en cours
+// Route de renvoie de la page des frets attribués
 Route::get('/espace/trans/frets', [FretController::class, 'index'])->name('fret');
 
 // Route de renvoie de détails d'un fret

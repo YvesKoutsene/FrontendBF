@@ -63,7 +63,7 @@
                             @if($nombreTournees !== ($fret['nombrecamions'] ?? 0))
                                 <div class="mb-5 flex items-center justify-between">
                                     <h5 class="text-lg font-semibold dark:text-white-light">
-                                        Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
+                                        Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}
                                     </h5>
                                     <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerofret'] ?? 'N/A', $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
                                        class="btn btn-warning">
@@ -180,7 +180,7 @@
                     <div>
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}</h5>
                                 @if($nombreTournees == 0)
                                     <a href="#" class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
@@ -296,7 +296,7 @@
                     <div class="switch">
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}</h5>
                             </div>
                             <div class="mb-5">
                                 <div class="table-responsive">
