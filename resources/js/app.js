@@ -483,11 +483,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dateArrivee = tournee.datearrivee ? new Date(tournee.datearrivee).toLocaleDateString('fr-FR') : '';
 
         const html = `
-            <div class="space-y-5 border-b pb-6 p-4 bg-gray-100 rounded-lg shadow-md">
+            <div class="space-y-5 border-b pb-6 p-4 bg-white rounded-xl shadow-xl">
                 <h5 class="text-lg font-semibold dark:text-white-light text-center">Tournée #${index + 1}</h5>
                 <input type="hidden" name="tournee_ids[]" value="${tournee.id}">
 
-                <h5 class="text-lg font-semibold dark:text-white-light">Informations de la tournée</h5>
+                <h5 class="text-lg font-semibold dark:text-white-light">Informations sur la tournée</h5>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label>Départ prévue</label>
