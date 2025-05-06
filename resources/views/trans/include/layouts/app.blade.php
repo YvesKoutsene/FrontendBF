@@ -23,6 +23,10 @@
     <link rel="stylesheet" href="\assets/css/nouislider.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4/animate.min.css" />
 
+    <!-- Tabulator CSS -->
+    <link href="https://unpkg.com/tabulator-tables@5.6.2/dist/css/tabulator.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     @vite('resources/css/app.css')
 
 </head>
@@ -112,6 +116,9 @@
     <link rel="stylesheet" href="\assets/css/highlight.min.css" />
     <script src="\assets/js/flatpickr.js"></script>
     <script src="\assets/js/nouislider.min.js"></script>
+
+    <!-- Tabulator JS -->
+    <script src="https://unpkg.com/tabulator-tables@5.6.2/dist/js/tabulator.min.js"></script>
 
     <script>
         document.addEventListener('alpine:init', () => {

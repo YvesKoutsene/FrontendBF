@@ -63,9 +63,9 @@
                             @if($nombreTournees !== ($fret['nombrecamions'] ?? 0))
                                 <div class="mb-5 flex items-center justify-between">
                                     <h5 class="text-lg font-semibold dark:text-white-light">
-                                        Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
+                                        Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
                                     </h5>
-                                    <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerodossier'], $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
+                                    <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerofret'] ?? 'N/A', $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
                                        class="btn btn-warning">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
                                             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
@@ -130,7 +130,7 @@
                                                         <td>{{ $formattedDate }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-info" title="Voir les détails">
+                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                                         class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                                         <path
@@ -139,13 +139,13 @@
                                                                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
-                                                                <a href="" class="btn btn-sm btn-primary" title="Modifier tournée">
+                                                                <a href="" class="btn btn-sm btn-outline-primary" title="Modifier tournée">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                                       <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                                       <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                                     </svg>
                                                                 </a>
-                                                                <button type="button" class="btn btn-sm btn-success"  onclick="showAlertStart('{{ $tournee['keytournee'] }}')" title="Démarrer cette tournée">
+                                                                <button type="button" class="btn btn-sm btn-outline-success"  onclick="showAlertStart('{{ $tournee['keytournee'] }}')" title="Démarrer cette tournée">
                                                                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
                                                                          <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
                                                                          <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
@@ -180,24 +180,18 @@
                     <div>
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
                                 @if($nombreTournees == 0)
                                     <a href="#" class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                            <path
-                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                                         </svg>
                                         Ajouter les étapes
                                     </a>
                                 @else
                                     <a href="{{ route('etape.create', [$fret['keyfret'], $fret['numerodossier']]) }}" class="btn btn-warning">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-plus-circle me-4" viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                            <path
-                                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                                         </svg>
                                         Ajouter les étapes
                                     </a>
@@ -250,24 +244,24 @@
                                                         <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-info" title="Voir les détails">
+                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                                                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
-                                                                <a href="" class="btn btn-sm btn-primary" title="Modifier tournée">
+                                                                <a href="" class="btn btn-sm btn-outline-primary" title="Modifier tournée">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                                       <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                                                       <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                                                                     </svg>
                                                                 </a>
-                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
+                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                                                         <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                                                                     </svg>
                                                                 </a>
-                                                                <button type="button" class="btn btn-sm btn-danger"  onclick="showAlertEnd('{{ $tournee['keytournee'] }}')" title="Clôturer cette tournée">
+                                                                <button type="button" class="btn btn-sm btn-outline-danger"  onclick="showAlertEnd('{{ $tournee['keytournee'] }}')" title="Clôturer cette tournée">
                                                                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                                                                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
                                                                   </svg>
@@ -302,7 +296,7 @@
                     <div class="switch">
                         <div class="panel">
                             <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
+                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}</h5>
                             </div>
                             <div class="mb-5">
                                 <div class="table-responsive">
@@ -349,14 +343,14 @@
                                                          <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
                                                         <td class="text-center">
                                                             <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-info" title="Voir les détails">
+                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                                                         class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
                                                                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                                                                     </svg>
                                                                 </a>
-                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-warning" title="Voir les étapes">
+                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                                                       <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                                                                     </svg>

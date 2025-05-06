@@ -12,7 +12,7 @@
             <div>
                 <div class="panel">
                     <div class="mb-5 flex items-center justify-between">
-                        <h5 class="text-lg font-semibold dark:text-white-light">Formulaire de création de tournée du fret N° {{ $numerodossier }}</h5>
+                        <h5 class="text-lg font-semibold dark:text-white-light">Formulaire de création de tournée du fret N° {{ $numerofret }}</h5>
                     </div>
                     <form id="tournee-form" class="space-y-5">
                         @csrf

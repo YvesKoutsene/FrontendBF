@@ -61,3 +61,35 @@ export async function fetchFretsAttribues() {
         return [];
     }
 }
+
+// Fonction pour afficher les détails d'un fret
+export async function showFret($keyfret) {
+
+    const authToken = localStorage.getItem('auth_token');
+
+    if (!authToken) {
+        console.error('Token manquant.');
+        return [];
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/frets-attribues/show/${keyfret}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            console.error('Erreur lors de la récupération des ressources :', response.status);
+            return [];
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Erreur lors de l’appel API :', error);
+        return [];
+    }
+}

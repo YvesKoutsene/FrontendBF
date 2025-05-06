@@ -9,22 +9,6 @@ use Illuminate\Support\Facades\Http;
 class TourneeController extends Controller
 {
     // Fonction de renvoie de la liste des frets
-    /*public function index($key)
-    {
-        $response = Http::get("http://192.168.15.133:8000/api/v1/trans/tournees-fret/$key");
-
-        if ($response->successful()) {
-            $data = $response->json();
-
-            $tournees = $data['tournees'] ?? []; //
-            $fret = $data['fret'] ?? []; //
-
-            return view('trans.page.tournee.index', compact('tournees', 'fret'));
-        } else {
-            abort(500, 'Erreur lors de la récupération des tournées');
-        }
-    }*/
-
     public function index($key)
     {
         $response = Http::get("http://192.168.15.133:8000/api/v1/trans/tournees-fret/$key");
@@ -50,8 +34,8 @@ class TourneeController extends Controller
      }*/
 
     // Fonction de renvoie de la page de création de tournees
-    public function create($keyfret, $numerodossier, $idlieuChargement, $lieuChargement, $idlieuDechargement, $lieuDechargement) {
-        return view('trans.page.tournee.create', compact('keyfret', 'numerodossier', 'idlieuChargement','lieuChargement', 'idlieuDechargement', 'lieuDechargement'));
+    public function create($keyfret, $numerofret, $idlieuChargement, $lieuChargement, $idlieuDechargement, $lieuDechargement) {
+        return view('trans.page.tournee.create', compact('keyfret', 'numerofret', 'idlieuChargement','lieuChargement', 'idlieuDechargement', 'lieuDechargement'));
     }
 
     // Fonction pour renvoyer la page index des étapes d'une tournée
