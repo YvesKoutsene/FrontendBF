@@ -4,7 +4,7 @@
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
             <li><a href="">Frets</a></li>
             <li  class="before:content-['/'] before:px-1.5"><a href="{{ route('fret') }}">Liste des frets</a></li>
-            <li  class="before:content-['/'] before:px-1.5"><a href="{{ route('tournee', $keyfret) }}">Liste des tournées</a></li>
+            <li  class="before:content-['/'] before:px-1.5"><a href="{{ route('tournee.show', $keyfret) }}">Liste des tournées</a></li>
             <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Ajouter étapes</a></li>
         </ol>
 

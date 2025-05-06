@@ -596,4 +596,75 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Pour afficher les détails d'un fret
+// Affichage esthétique des détails d'un fret
+document.addEventListener('DOMContentLoaded', async () => {
+    const keyfret = window.keyfret;
+    const container = document.getElementById('fretshow-container');
+
+    if (!keyfret) {
+        console.error("Clé de fret manquante.");
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="text-center py-10 text-gray-600 animate-pulse">
+            <p class="text-lg font-medium">Chargement des détails du fret...</p>
+        </div>`;
+
+    const response = await showFret(keyfret);
+    if (!response || !response.fret) {
+        container.innerHTML = '<p class="text-red-500 text-center mt-6">Erreur lors du chargement du fret.</p>';
+        return;
+    }
+
+    const fret = response.fret;
+    const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return isNaN(date) ? 'N/A' : `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    };
+
+    container.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-white rounded-xl shadow-xl">
+            <div class="bg-gray-50 p-4 rounded-lg border">
+                <h2 class="text-lg font-semibold text-indigo-700 mb-4 border-b pb-2">📦 Informations générales</h2>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    <li><strong>Numéro fret :</strong> ${fret.numerofret ?? 'N/A'}</li>
+                    <li><strong>Numéro dossier :</strong> ${fret.numerodossier ?? 'N/A'}</li>
+                    <li><strong>Chargement :</strong> ${fret.lieuchargement?.nom ?? 'N/A'} (${formatDate(fret.jourchargement)})</li>
+                    <li><strong>Déchargement :</strong> ${fret.lieudechargement?.nom ?? 'N/A'} (${formatDate(fret.jourdechargement)})</li>
+                    <li><strong>Marchandise :</strong> ${fret.naturemarchandise ?? 'N/A'} (${fret.poidsmarchandise ?? '?'} kg)</li>
+                    <li><strong>Conteneurs :</strong> ${fret.nombreconteneurs ?? 'N/A'} / <strong>Camions :</strong> ${fret.nombrecamions ?? 'N/A'}</li>
+                    <li><strong>Commentaire :</strong> <em>${fret.commentaire ?? 'Aucun'}</em></li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg border">
+                <h2 class="text-lg font-semibold text-green-700 mb-4 border-b pb-2">🚚 Marchandise & Véhicule</h2>
+                <ul class="space-y-2 text-sm text-gray-700">
+                    <li><strong>Type marchandise :</strong> ${fret.typemarchandise?.libelle ?? 'N/A'}</li>
+                    <li><strong>Type véhicule :</strong> ${fret.typevehicule?.libelle ?? 'N/A'}</li>
+                    <li><strong>Température :</strong> ${fret.parametresvehicule?.temperaturemin ?? 'N/A'}°C - ${fret.parametresvehicule?.temeraturemax ?? 'N/A'}°C</li>
+                    <li><strong>Dimensions (H×L×l) :</strong>
+                        ${fret.parametresvehicule?.hauteurchargement ?? '?'}m ×
+                        ${fret.parametresvehicule?.longueurchargement ?? '?'}m ×
+                        ${fret.parametresvehicule?.largeurchargement ?? '?'}m
+                    </li>
+                    <li><strong>Isolation thermique :</strong> ${fret.parametresvehicule?.isolationthermique ? '✅ Oui' : '❌ Non'}</li>
+                    <li><strong>Normes sanitaires :</strong> ${fret.parametresvehicule?.normesanitaire ?? 'N/A'}</li>
+                    <li><strong>Chargement :</strong> ${fret.parametresvehicule?.modechargement ?? 'N/A'}</li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-lg border md:col-span-2">
+                <h2 class="text-lg font-semibold text-blue-700 mb-4 border-b pb-2">🧊 Système & Capacité</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+                    <li><strong>Refroidissement :</strong> ${fret.parametresvehicule?.systemerefroidissement ?? 'N/A'}</li>
+                    <li><strong>Matériau citerne :</strong> ${fret.parametresvehicule?.materiauciterne ?? 'N/A'}</li>
+                    <li><strong>Capacité :</strong> ${fret.parametresvehicule?.capacitelitre ?? 'N/A'} L / ${fret.parametresvehicule?.capacitepieds ?? 'N/A'} ft</li>
+                    <li><strong>Réfrigéré :</strong> ${fret.parametresvehicule?.reefer ? '✅ Oui' : '❌ Non'}</li>
+                    <li class="col-span-2"><strong>Autre paramètre :</strong> ${fret.parametresvehicule?.autreparametre ?? 'N/A'}</li>
+                </ul>
+            </div>
+        </div>
+    `;
+});

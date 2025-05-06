@@ -11,19 +11,26 @@
             <div>
                 <div class="panel">
                     <div class="mb-5 flex items-center justify-between">
-                            <h5 class="text-lg font-semibold dark:text-white-light">Détails du fret N° {{ $numerofret }}</h5>
+                        <h5 class="text-lg font-semibold dark:text-white-light">Détails du fret N° {{ $numerofret }}</h5>
                     </div>
-
-
-
+                    <div id="fretshow-container" class="space-y-5">
+                    </div>
+                    <div class="flex space-x-4 justify-end items-end mt-6">
+                        <a href="{{ route('tournee.show',$keyfret) }}" class="btn btn-warning">
+                            Voir Tournées
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
  <script>
         window.keyfret = "{{ $keyfret }}";
  </script>
 
+<style>
+
+
+</style>
 @endsection
