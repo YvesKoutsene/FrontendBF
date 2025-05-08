@@ -8,604 +8,188 @@
         </ol>
 
         <div class="pt-5">
-            <div x-data="{ tab: 'en-attente' }">
-                <ul
-                    class="mb-5 overflow-y-auto whitespace-nowrap border-b border-[#ebedf2] font-semibold dark:border-[#191e3a] sm:flex">
-                    <li class="inline-block">
-                        <a href="javascript:;" class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning"
-                            :class="{ '!border-warning text-warning': tab == 'en-attente' }" @click="tab='en-attente'">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="#008CBA" stroke-width="2" />
-                                <line x1="12" y1="8" x2="12" y2="12" stroke="#008CBA"
-                                    stroke-width="2" />
-                                <line x1="12" y1="16" x2="12" y2="16" stroke="#008CBA"
-                                    stroke-width="2" />
-                            </svg>
-                            En attente
-                        </a>
-                    </li>
-                    <li class="inline-block">
-                        <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning" :class="{ '!border-warning text-warning': tab == 'en-cours' }" @click="tab='en-cours'">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 2C6.48 2 2 6.48 2 12h2c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8c-1.11 0-2.16-.23-3.12-.62l-2.65 2.65C8.53 20.57 10.22 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2z"
-                                    fill="#008CBA" />
-                                <path d="M12 6v6l4 2" stroke="#008CBA" stroke-width="2" />
-                            </svg>
-                            En cours
-                        </a>
-                    </li>
-                    <li class="inline-block">
-                        <a href="javascript:;"
-                            class="flex gap-2 border-b border-transparent p-4 hover:border-warning hover:text-warning"
-                            :class="{ '!border-warning text-warning': tab == 'cloturees' }" @click="tab='cloturees'">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M9 19l-7-7 1.41-1.41L9 16.17l11.59-11.59L22 6l-13 13z" fill="#008CBA" />
-                            </svg>
-                            Clôturées
-                        </a>
-                    </li>
-                </ul>
+            <div class="panel">
+               <div class=" mb-4 gap-4 flex items-center justify-center">
+                   <h5 class="text-lg font-semibold dark:text-white-light">
+                        Tournées créées pour le num. fret : /
+                   </h5>
+               </div>
 
-                <div class="mb-5 flex items-center justify-center">
-                    <h5 class="text-lg font-semibold dark:text-white-light">
-                        Nombre de tournées créées : {{ $nombreTournees }} / {{ $fret['nombrecamions'] ?? 'N/A' }}
-                    </h5>
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
+                <div>
+                  <label for="entries-select" class="text-sm font-medium text-gray-700">Nombre d'entrées
+                      <select id="entries-select" class="ml-2 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5">
+                        <option value="10" selected>10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                   </label>
                 </div>
+                <div class="relative w-full sm:w-64">
+                    <input type="text" id="search-input" placeholder="Rechercher ici..." class="form-input shadow-[0_0_4px_2px_rgb(31_45_61/_10%)] bg-white rounded-full h-11 pl-10 pr-4 transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+                       <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                               <path d="M12.9 14.32A7.5 7.5 0 1 0 14.32 12.9l3.7 3.7a1 1 0 0 0 1.42-1.42l-3.7-3.7zM10 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+                           </svg>
+                       </div>
+                </div>
+              </div>
 
-                <template x-if="tab === 'en-attente'">
-                    <div>
-                        <div class="panel">
-                            @if($nombreTournees !== ($fret['nombrecamions'] ?? 0))
-                                <div class="mb-5 flex items-center justify-between">
-                                    <h5 class="text-lg font-semibold dark:text-white-light">
-                                        Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}
-                                    </h5>
-                                    <a href="{{ route('tournee.create', [$fret['keyfret'], $fret['numerofret'] ?? 'N/A', $fret['lieuchargement']['id'], $fret['lieuchargement']['nom'], $fret['lieudechargement']['id'], $fret['lieudechargement']['nom']]) }}"
-                                       class="btn btn-warning">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
-                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
-                                        </svg>
-                                        Créer une tournée
-                                    </a>
-                                </div>
-                            @else
-                                <div class="mb-5 flex items-center justify-between">
-                                    <h5 class="text-lg font-semibold dark:text-white-light">
-                                        Tournées du fret N° {{ $fret['numerodossier'] ?? 'N/A' }}, {{ $fret['lieuchargement']['nom'] ?? 'N/A' }} à {{ $fret['lieudechargement']['nom'] ?? 'N/A' }}
-                                    </h5>
-                                    <a href="#"
-                                       class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
-                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
-                                        </svg>
-                                        Créer une tournée
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="mb-5">
-                                <div class="table-responsive">
-                                    <table class="table-hover" id="myTable" class="whitespace-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion favoris</th>
-                                                <th>Chauffeur favoris</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Créée le</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php $iteration = 1; @endphp
-                                            @foreach ($tournees as $tournee)
-                                                @if ($tournee['statut'] == 10)
-                                                    <tr>
-                                                        <td>{{ $iteration++ }}</td>
-                                                        <td>{{ $tournee['camion_actif'][0]['plaque1'] ?? 'N/A' }}/{{ $tournee['camion_actif'][0]['plaque2'] ?? 'N/A' }}
-                                                        </td>
-                                                        <td>{{ $tournee['chauffeur_actif'][0]['nom'] ?? 'N/A' }}
-                                                            {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['poids'] }}</td>
-                                                        <td>{{ $tournee['numerobl'] }}</td>
-                                                        @php
-                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
-                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
-                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
-                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
-                                                        @endphp
-                                                        <td>{{ $formattedDate1 }}</td>
-                                                        <td>{{ $formattedDate2 }}</td>
-                                                         @php
-                                                            $createdAt = \Carbon\Carbon::parse($tournee['created_at']);
-                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
-                                                         @endphp
-                                                        <td>{{ $formattedDate }}</td>
-                                                        <td class="text-center">
-                                                            <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                                        class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                                        <path
-                                                                            d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                                                        <path
-                                                                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                                                    </svg>
-                                                                </a>
-                                                                <a href="" class="btn btn-sm btn-outline-primary" title="Modifier tournée">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                                                    </svg>
-                                                                </a>
-                                                                <button type="button" class="btn btn-sm btn-outline-success"  onclick="showAlertStart('{{ $tournee['keytournee'] }}')" title="Démarrer cette tournée">
-                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
-                                                                         <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
-                                                                         <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
-                                                                     </svg>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion favoris</th>
-                                                <th>Chauffeur favoris</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Créée le</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-                <template x-if="tab === 'en-cours'">
-                    <div>
-                        <div class="panel">
-                            <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}</h5>
-                                @if($nombreTournees == 0)
-                                    <a href="#" class="btn btn-warning disabled" style="pointer-events: none; opacity: 0.5;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                        </svg>
-                                        Ajouter les étapes
-                                    </a>
-                                @else
-                                    <a href="{{ route('etape.create', [$fret['keyfret'], $fret['numerodossier']]) }}" class="btn btn-warning">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
-                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                        </svg>
-                                        Ajouter les étapes
-                                    </a>
-                                @endif
-                            </div>
-                            <div class="mb-5">
-                                <div class="table-responsive">
-                                    <table class="table-hover" id="myTable" class="whitespace-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Démarrée le</th>
-                                                <th>Etape actuelle</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="frets-body">
-                                            @php $iteration = 1; @endphp
-                                            @foreach ($tournees as $tournee)
-                                                @if ($tournee['statut'] == 20)
-                                                    <tr>
-                                                        <td>{{ $iteration++ }}</td>
-                                                        <td>{{ $tournee['camion_actif'][0]['plaque1'] ?? 'N/A' }}/{{ $tournee['camion_actif'][0]['plaque2'] ?? 'N/A' }}
-                                                        </td>
-                                                        <td>{{ $tournee['chauffeur_actif'][0]['nom'] ?? 'N/A' }}
-                                                            {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['poids'] }}</td>
-                                                        <td>{{ $tournee['numerobl'] }}</td>
-                                                        <!--<td>{{ $tournee['lieu_depart']['nom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['lieu_arrivee']['nom'] ?? 'N/A' }}</td>-->
-                                                        @php
-                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
-                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
-                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
-                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
-                                                        @endphp
-                                                        <td>{{ $formattedDate1 }}</td>
-                                                        <td>{{ $formattedDate2 }}</td>
-                                                        @php
-                                                            $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
-                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
-                                                        @endphp
-                                                        <td>{{ $formattedDate }}</td>
-                                                        <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
-                                                        <td class="text-center">
-                                                            <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                                                    </svg>
-                                                                </a>
-                                                                <a href="" class="btn btn-sm btn-outline-primary" title="Modifier tournée">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                                                                      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                                                                      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
-                                                                    </svg>
-                                                                </a>
-                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
-                                                                        <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
-                                                                    </svg>
-                                                                </a>
-                                                                <button type="button" class="btn btn-sm btn-outline-danger"  onclick="showAlertEnd('{{ $tournee['keytournee'] }}')" title="Clôturer cette tournée">
-                                                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-                                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
-                                                                  </svg>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion actif</th>
-                                                <th>Chauffeur actif</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Démarrée le</th>
-                                                <th>Etape actuelle</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
-                <template x-if="tab === 'cloturees'">
-                    <div class="switch">
-                        <div class="panel">
-                            <div class="mb-5 flex items-center justify-between">
-                                <h5 class="text-lg font-semibold dark:text-white-light">Tournées du fret N° {{ $fret['numerofret'] ?? 'N/A' }}</h5>
-                            </div>
-                            <div class="mb-5">
-                                <div class="table-responsive">
-                                    <table class="table-hover" id="myTable" class="whitespace-nowrap">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion finaliste</th>
-                                                <th>Chauffeur finaliste</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Clôturéée le</th>
-                                                <th>Dernière étape</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="frets-body">
-                                            @php $iteration = 1; @endphp
-                                            @foreach ($tournees as $tournee)
-                                                @if ($tournee['statut'] == 30)
-                                                    <tr>
-                                                        <td>{{ $iteration++ }}</td>
-                                                        <td>{{ $tournee['camion_actif'][0]['plaque1'] ?? 'N/A' }}/{{ $tournee['camion_actif'][0]['plaque2'] ?? 'N/A' }}
-                                                        </td>
-                                                        <td>{{ $tournee['chauffeur_actif'][0]['nom'] ?? 'N/A' }}
-                                                            {{ $tournee['chauffeur_actif'][0]['prenom'] ?? 'N/A' }}</td>
-                                                        <td>{{ $tournee['poids'] }}</td>
-                                                        <td>{{ $tournee['numerobl'] }}</td>
-                                                        @php
-                                                            $createdAt1 = \Carbon\Carbon::parse($tournee['datedepart']);
-                                                            $createdAt2 = \Carbon\Carbon::parse($tournee['datearrivee']);
-                                                            $formattedDate1 = $createdAt1->format('d/m/Y');
-                                                            $formattedDate2 = $createdAt2->format('d/m/Y');
-                                                        @endphp
-                                                        <td>{{ $formattedDate1 }}</td>
-                                                        <td>{{ $formattedDate2 }}</td>
-                                                        @php
-                                                            $createdAt = \Carbon\Carbon::parse($tournee['updated_at']);
-                                                            $formattedDate = $createdAt->format('d/m/Y à H:i');
-                                                        @endphp
-                                                        <td>{{ $formattedDate }}</td>
-                                                         <td>{{ $tournee['derniere_etape']['position'] ?? 'N/A' }}</td>
-                                                        <td class="text-center">
-                                                            <div class="flex justify-center gap-2">
-                                                                <a href="" class="btn btn-sm btn-outline-info" title="Voir les détails">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                                                        class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                                                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                                                                        <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                                                                    </svg>
-                                                                </a>
-                                                                <a href="{{ route('etape.index', [ $tournee['keytournee'], $tournee['numerobl'] ]) }}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
-                                                                      <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
-                                                                    </svg>
-                                                                </a>
-                                                                <a href="" class="btn btn-sm btn-outline-danger"
-                                                                    title="Supprimer cette tournee">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                                                                      <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
-                                                                    </svg>
-                                                                </a>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Camion finaliste</th>
-                                                <th>Chauffeur finaliste</th>
-                                                <th>Poids(Kg)</th>
-                                                <th>Numero Bl</th>
-                                                <th>Départ prévue</th>
-                                                <th>Arrivée prévue</th>
-                                                <th>Clôturéée le</th>
-                                                <th>Dernière étape</th>
-                                                <th class="text-center">Actions</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </template>
+              <div class="flex flex-wrap gap-2 mb-4 ">
+                  <button data-statut="statut10" class="tab-button active bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
+                          <path d="M11 6h2v6h-2zm0 8h2v2h-2z"/>
+                      </svg>
+                      Tournées en attente
+                  </button>
+                  <button data-statut="statut20" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
+                          <path d="M10 10h4v4h-4z"/>
+                      </svg>
+                      Tournées en cours
+                  </button>
+                  <button data-statut="statut30" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
+                          <path d="M9 12l2 2 4-4-1.5-1.5L11 11l-1-1z"/>
+                      </svg>
+                      Tournées clôturées
+                  </button>
+              </div>
+
+              <div id="statut10-wrapper" class="tournee-table-group mb-5">
+                <div class="mb-5 flex items-end justify-end">
+                    <a href="" class="btn btn-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
+                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
+                        </svg>
+                        Créer une tournée
+                    </a>
+                </div>
+                <div class="overflow-auto rounded-lg shadow mb-4 table-responsive">
+                  <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
+                    <thead class="bg-gray-50 font-medium text-gray-700">
+                      <tr>
+                        <th class="px-4 py-2 border">#</th>
+                        <th class="px-4 py-2 border">Num. tournée</th>
+                        <th class="px-4 py-2 border">Camion</th>
+                        <th class="px-4 py-2 border">Chauffeur</th>
+                        <th class="px-4 py-2 border">Poids (Kg)</th>
+                        <th class="px-4 py-2 border">Départ prévue</th>
+                        <th class="px-4 py-2 border">Arrivée prévue</th>
+                        <th class="px-4 py-2 border">Date création</th>
+                        <th class="px-4 py-2 border text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="statut10-body" class="divide-y divide-gray-100 bg-white"></tbody>
+                    <tfoot class="bg-gray-50 font-medium text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2 border">#</th>
+                        <th class="px-4 py-2 border">Num. tournée</th>
+                        <th class="px-4 py-2 border">Camion</th>
+                        <th class="px-4 py-2 border">Chauffeur</th>
+                        <th class="px-4 py-2 border">Poids (Kg)</th>
+                        <th class="px-4 py-2 border">Départ prévue</th>
+                        <th class="px-4 py-2 border">Arrivée prévue</th>
+                        <th class="px-4 py-2 border">Date création</th>
+                        <th class="px-4 py-2 border text-center">Actions</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="statut10-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
+              </div>
+
+              <div id="statut20-wrapper" class="tournee-table-group hidden mb-5">
+                <div class="mb-5 flex items-end justify-end">
+                    <a href="" class="btn btn-warning">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                         </svg>
+                        Ajouter les étapes
+                    </a>
+                </div>
+                <div class="overflow-auto rounded-lg shadow mb-4 table-responsive">
+                  <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
+                    <thead class="bg-gray-50 font-medium text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Num. tournée</th>
+                            <th class="px-4 py-2 border">Camion</th>
+                            <th class="px-4 py-2 border">Chauffeur</th>
+                            <th class="px-4 py-2 border">Poids (Kg)</th>
+                            <th class="px-4 py-2 border">Départ prévue</th>
+                            <th class="px-4 py-2 border">Arrivée prévue</th>
+                            <th class="px-4 py-2 border">Date démarrage</th>
+                            <th class="px-4 py-2 border">Étape actuelle</th>
+                            <th class="px-4 py-2 border text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statut20-body" class="divide-y divide-gray-100 bg-white"></tbody>
+                    <tfoot class="bg-gray-50 font-medium text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Num. tournée</th>
+                            <th class="px-4 py-2 border">Camion</th>
+                            <th class="px-4 py-2 border">Chauffeur</th>
+                            <th class="px-4 py-2 border">Poids (Kg)</th>
+                            <th class="px-4 py-2 border">Départ prévue</th>
+                            <th class="px-4 py-2 border">Arrivée prévue</th>
+                            <th class="px-4 py-2 border">Date démarrage</th>
+                            <th class="px-4 py-2 border">Étape actuelle</th>
+                            <th class="px-4 py-2 border text-center">Actions</th>
+                        </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="statut20-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
+              </div>
+
+              <div id="statut30-wrapper" class="tournee-table-group hidden mb-5">
+                <div class="overflow-auto rounded-lg shadow mb-4 table-responsive">
+                  <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
+                    <thead class="bg-gray-50 font-medium text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Num. tournée</th>
+                            <th class="px-4 py-2 border">Camion</th>
+                            <th class="px-4 py-2 border">Chauffeur</th>
+                            <th class="px-4 py-2 border">Poids (Kg)</th>
+                            <th class="px-4 py-2 border">Départ prévue</th>
+                            <th class="px-4 py-2 border">Arrivée prévue</th>
+                            <th class="px-4 py-2 border">Date clôture</th>
+                            <th class="px-4 py-2 border">Dernière étape</th>
+                            <th class="px-4 py-2 border text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statut30-body" class="divide-y divide-gray-100 bg-white"></tbody>
+                    <tfoot class="bg-gray-50 font-medium text-gray-700">
+                        <tr>
+                            <th class="px-4 py-2 border">#</th>
+                            <th class="px-4 py-2 border">Num. tournée</th>
+                            <th class="px-4 py-2 border">Camion</th>
+                            <th class="px-4 py-2 border">Chauffeur</th>
+                            <th class="px-4 py-2 border">Poids (Kg)</th>
+                            <th class="px-4 py-2 border">Départ prévue</th>
+                            <th class="px-4 py-2 border">Arrivée prévue</th>
+                            <th class="px-4 py-2 border">Date clôture</th>
+                            <th class="px-4 py-2 border">Dernière étape</th>
+                            <th class="px-4 py-2 border text-center">Actions</th>
+                        </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="statut30-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
+              </div>
             </div>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    // Pour démarrer une tournée
-    async function showAlertStart(keytournee) {
-        const steps = ['1', '2', '3'];
-        const swalQueueStep = Swal.mixin({
-            confirmButtonText: 'Suivant →',
-            showCancelButton: false,
-            progressSteps: steps,
-            inputAttributes: {
-                required: true,
-            },
-            validationMessage: 'Ce champ est obligatoire',
-            padding: '2em',
-        });
-
-        const values = {};
-
-        try {
-            const positionResult = await swalQueueStep.fire({
-                title: 'Position actuelle',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Position actuelle',
-                    required: true,
-                    name: 'postion',
-                },
-                currentProgressStep: 0,
-            });
-
-            if (!positionResult.value) return;
-            values.position = positionResult.value;
-
-            const latitudeResult = await swalQueueStep.fire({
-                title: 'Latitude',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Latitude',
-                    required: true,
-                    name: 'latitude',
-                },
-                currentProgressStep: 1,
-            });
-
-            if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Veuillez entrer une latitude valide (entre -90 et 90)',
-                });
-                return;
-            }
-            values.latitude = parseFloat(latitudeResult.value);
-
-            const longitudeResult = await swalQueueStep.fire({
-                title: 'Longitude',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Longitude',
-                    required: true,
-                    name: 'longitude',
-                },
-                currentProgressStep: 2,
-            });
-
-            if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Veuillez entrer une longitude valide (entre -180 et 180)',
-                });
-                return;
-            }
-            values.longitude = parseFloat(longitudeResult.value);
-
-            const confirmation = await Swal.fire({
-                title: 'Êtes-vous sûr de vouloir commencer cette tournée ?',
-                padding: '2em',
-                confirmButtonText: 'Oui, démarrer',
-                showCancelButton: true,
-                cancelButtonText: 'Annuler',
-            });
-
-            if (confirmation.isConfirmed) {
-                const result = await demarrerTournee(keytournee, values);
-
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Tournée démarrée avec succès !',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-
-                window.location.reload();
-            }
-
-        } catch (error) {
-            const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: message,
-            });
-        }
-    }
-
-    // Pour va vérification de la longitude et latitude
-    function isValidCoordinate(value) {
-        const number = parseFloat(value);
-        return !isNaN(number) && ((value.includes('.') || value.includes(',')) ? (number >= -90 && number <= 90) : (number >= -180 && number <= 180));
-    }
-
-    // Pour clôturer une tournée
-    async function showAlertEnd(keytournee) {
-        const steps = ['1', '2', '3'];
-        const swalQueueStep = Swal.mixin({
-            confirmButtonText: 'Suivant →',
-            showCancelButton: false,
-            progressSteps: steps,
-            inputAttributes: {
-                required: true,
-            },
-            validationMessage: 'Ce champ est obligatoire',
-            padding: '2em',
-        });
-
-        const values = {};
-
-        try {
-            const positionResult = await swalQueueStep.fire({
-                title: 'Position actuelle',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Position actuelle',
-                    required: true,
-                    name: 'postion',
-                },
-                currentProgressStep: 0,
-            });
-
-            if (!positionResult.value) return;
-            values.position = positionResult.value;
-
-            const latitudeResult = await swalQueueStep.fire({
-                title: 'Latitude',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Latitude',
-                    required: true,
-                    name: 'latitude',
-                },
-                currentProgressStep: 1,
-            });
-
-            if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Veuillez entrer une latitude valide (entre -90 et 90)',
-                });
-                return;
-            }
-            values.latitude = parseFloat(latitudeResult.value);
-
-            const longitudeResult = await swalQueueStep.fire({
-                title: 'Longitude',
-                input: 'text',
-                inputAttributes: {
-                    placeholder: 'Longitude',
-                    required: true,
-                    name: 'longitude',
-                },
-                currentProgressStep: 2,
-            });
-
-            if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Veuillez entrer une longitude valide (entre -180 et 180)',
-                });
-                return;
-            }
-            values.longitude = parseFloat(longitudeResult.value);
-
-            const confirmation = await Swal.fire({
-                title: 'Êtes-vous sûr de vouloir clôturer cette tournée ?',
-                padding: '2em',
-                confirmButtonText: 'Oui, clôturer',
-                showCancelButton: true,
-                cancelButtonText: 'Annuler',
-            });
-
-            if (confirmation.isConfirmed) {
-                const result = await cloturerTournee(keytournee, values);
-
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Tournée clôturée avec succès !',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-
-                window.location.reload();
-            }
-
-        } catch (error) {
-            const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';
-            Swal.fire({
-                icon: 'error',
-                title: 'Erreur',
-                text: message,
-            });
-        }
-    }
-</script>
+ <script>
+        window.keyfret = "{{ $keyfret }}";
+ </script>
 
 @endsection

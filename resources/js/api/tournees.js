@@ -1,16 +1,15 @@
 import { API_BASE_URL } from './config.js';
 
-// Fonction d'appel des tournées des frets du transporteur connacté
-/*export async function fetchTournees() {
+// Fonction d'appel des tournées d'un fret du transporteur connecté
+export async function fetchTournees(keyfret) {
     try {
         const authToken = localStorage.getItem('auth_token');
 
         if (!authToken) {
             console.error('Token manquant.');
-            return [];
+            return { tournees: [], fret: null };
         }
 
-        // Appel à l'API pour récupérer les tournées du fret
         const response = await fetch(`${API_BASE_URL}/tournees-fret/${keyfret}`, {
             method: 'GET',
             headers: {
@@ -21,21 +20,19 @@ import { API_BASE_URL } from './config.js';
 
         if (response.status === 401) {
             console.warn("Utilisateur non authentifié.");
-            return [];
+            return { tournees: [], fret: null };
         }
 
         if (response.status === 204) {
             console.info("Aucun fret attribué.");
-            return [];
+            return { tournees: [], fret: null };
         }
 
-        // On récupère la réponse en texte brut
         const text = await response.text();
 
-        // Si la réponse est vide, on retourne un tableau vide
         if (!text) {
             console.warn("Réponse vide du serveur.");
-            return [];
+            return { tournees: [], fret: null };
         }
 
         let data;
@@ -43,19 +40,21 @@ import { API_BASE_URL } from './config.js';
             data = JSON.parse(text);
         } catch (jsonError) {
             console.error("Erreur de parsing JSON :", jsonError);
-            return [];
+            return { tournees: [], fret: null };
         }
 
-        // Retour des tournées du fret si disponibles
         console.log("Tournées récupérées :", data.tournees);
-        return data.tournees || [];
+        console.log("Fret récupéré :", data.fret);
+        return {
+            tournees: data.tournees || [],
+            fret: data.fret || null
+        };
 
     } catch (error) {
         console.error("Erreur lors de la récupération des tournées:", error);
-        return [];
+        return { tournees: [], fret: null };
     }
 }
-*/
 
 // Fonction d'appel des chauffeurs et camions libres du transporteur connecté
 export async function getRessourcesDisponibles() {

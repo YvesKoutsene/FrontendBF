@@ -40,7 +40,7 @@ Route::get('/espace/trans/frets', [FretController::class, 'index'])->name('fret'
 Route::get('/espace/trans/frets/details/{key}/{num}', [FretController::class, 'show'])->name('fret.show');
 
 // Route de renvoie de la page des tournees
-Route::get('/espace/trans/tournees-fret/{key}', [TourneeController::class, 'index'])->name('tournee.show');
+Route::get('/espace/trans/tournees-fret/{keyfret}', [TourneeController::class, 'index'])->name('tournee.show');
 
 // Route de renvoie de la page d'ajout de tournées
 Route::get('/espace/trans/ajouter-tournee/{keyfret}/{numerofret}/{idlieuChargement}/{lieuChargement}/{idlieuDechargement}/{lieuDechargement}', [TourneeController::class, 'create'])->name('tournee.create');

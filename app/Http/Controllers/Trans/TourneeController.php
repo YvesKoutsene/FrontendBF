@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class TourneeController extends Controller
 {
     // Fonction de renvoie de la liste des frets
-    public function index($key)
+    /*public function index($key)
     {
         $response = Http::get("http://192.168.15.133:8000/api/v1/trans/tournees-fret/$key");
 
@@ -19,13 +19,21 @@ class TourneeController extends Controller
             $tournees = $data['tournees'] ?? [];
             $fret = $data['fret'] ?? [];
 
-            // Compter le nombre de tournées
             $nombreTournees = count($tournees);
 
-            return view('trans.page.tournee.index', compact('tournees', 'fret', 'nombreTournees'));
+            $nombreTourneesencours = count(array_filter($tournees, function($tournee) {
+                return $tournee['statut'] === 20;
+            }));
+
+            return view('trans.page.tournee.index', compact('tournees', 'fret', 'nombreTournees', 'nombreTourneesencours'));
         } else {
             abort(500, 'Erreur lors de la récupération des tournées');
         }
+    }*/
+
+    public function index($keyfret)
+    {
+        return view('trans.page.tournee.index', compact('keyfret'));
     }
 
      /*public function index($key)

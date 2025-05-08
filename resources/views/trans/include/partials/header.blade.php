@@ -112,9 +112,7 @@
                 <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
                     <a href="javascript:;" class="group relative" @click="toggle()">
                         <span>
-                            <span class="flex justify-center items-center w-9 h-9 text-center rounded-full object-cover bg-warning text-xl ring-2 ring-white dark:ring-white-dark">
-                                AT
-                            </span>
+                            <img src="\assets/images/dfprofile.jpg" alt="Profile" class="rounded-circle" width="35" height="35" style="border-radius: 50%;">
                         </span>
                     </a>
                     <ul x-cloak x-show="open" x-transition x-transition.duration.300ms
@@ -122,9 +120,7 @@
                         <li>
                             <div class="flex items-center px-4 py-4">
                                 <div class="flex-none">
-                                     <span class="flex justify-center items-center w-10 h-10 text-center rounded-full object-cover bg-warning text-xl ring-2 ring-white dark:ring-white-dark">
-                                        AT
-                                     </span>
+                                     <img src="\assets/images/dfprofile.jpg" alt="Profile" class="rounded-circle" width="45" height="45" style="border-radius: 50%;">
                                 </div>
                                 <div id="user-info" class="truncate ltr:pl-4 rtl:pr-4">
                                     <!-- Les infos utilisateur seront injectées ici -->

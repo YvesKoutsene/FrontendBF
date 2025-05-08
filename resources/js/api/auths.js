@@ -1,5 +1,6 @@
 import { API_BASE_URL } from './config.js';
 
+// Pour la connexion
 export async function connexion(email, motdepasse) {
     try {
         const response = await fetch(`${API_BASE_URL}/connexion`, {
@@ -33,6 +34,7 @@ export async function connexion(email, motdepasse) {
     }
 }
 
+// Pour la deconnexion
 export async function deconnexion() {
     try {
         const token = localStorage.getItem('auth_token');

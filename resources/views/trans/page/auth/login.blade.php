@@ -16,7 +16,6 @@
     :class="[$store.app.sidebar ? 'toggle-sidebar' : '', $store.app.theme === 'dark' || $store.app.isDarkMode ? 'dark' : '',
         $store.app.menu, $store.app.layout, $store.app.rtlClass
     ]">
-    @include('trans.include.partials.msg')
     <!-- screen loader -->
     <div
         class="screen_loader animate__animated fixed inset-0 z-[60] grid place-content-center bg-[#fafafa] dark:bg-[#060818]">
@@ -133,8 +132,7 @@
 
                             <div class="text-center dark:text-white">
                                 Vous n'avez pas de compte ?
-                                <a href="{{ route('enregistrement') }}"
-                                    class="uppercase text-warning underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
+                                <a href="{{ route('enregistrement') }}" class="uppercase text-warning underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
                             </div>
                         </div>
                     </div>
@@ -150,7 +148,6 @@
     <script src="\assets/js/custom.js"></script>
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
-
 </body>
 
 </html>
