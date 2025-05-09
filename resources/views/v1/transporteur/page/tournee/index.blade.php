@@ -1,4 +1,4 @@
-@extends('trans.include.layouts.app')
+@extends('v1.transporteur.include.layouts.app')
 @section('content')
     <div>
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
@@ -189,6 +189,6 @@
         window.keyfret = "{{ $keyfret }}";
  </script>
 
-@include('trans.page.tournee.modal') <!-- Pour les deux fenêtres modales (Démarrer et clôturer tournee)-->
+@include('v1.transporteur.page.tournee.modal') <!-- Pour les deux fenêtres modales (Démarrer et clôturer tournee)-->
 
 @endsection

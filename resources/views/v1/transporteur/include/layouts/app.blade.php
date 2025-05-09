@@ -76,26 +76,28 @@
     <div class="main-container min-h-screen text-black dark:text-white-dark" :class="[$store.app.navbar]">
         <!-- start sidebar section -->
         <div :class="{ 'dark text-white-dark': $store.app.semidark }">
-            @include('trans.include.partials.sidebar')
+            @include('v1.transporteur.include.partials.sidebar')
         </div>
         <!-- end sidebar section -->
 
         <div class="main-content flex min-h-screen flex-col">
             <!-- start header section -->
-                @include('trans.include.partials.header')
+                @include('v1.transporteur.include.partials.header')
             <!-- end header section -->
 
             <div class="dvanimation animate__animated p-6" :class="[$store.app.animation]">
                 <!-- start main content section -->
                  @yield('content')
                  @vite(['resources/js/app.js', 'resources/css/app.css'])
-                 @include('trans.include.partials.msg')
+
+                 @vite('resources/js/v1/pages/dashboard.js')
+                 @include('v1.transporteur.include.partials.msg')
                  @stack('scripts')
                 <!-- end main content section -->
             </div>
 
             <!-- start footer section -->
-            @include('trans.include.partials.footer')
+            @include('v1.transporteur.include.partials.footer')
             <!-- end footer section -->
         </div>
     </div>
@@ -759,8 +761,6 @@
             }));
         });
     </script>
-    @vite('resources/js/pages/dashboard.js')
-    @vite(['resources/js/app.js', 'resources/css/app.css'])
 
 </body>
 

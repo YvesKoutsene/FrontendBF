@@ -202,7 +202,7 @@ function renderTourneesByGroup(groupKey, filterFn) {
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
                             </svg>
                         </a>
-                        <a href="/espace/trans/tournees-fret/etapes/index/${tournee.keytournee}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
+                        <a href="/v1/espace/transporteur/tournees-fret/etapes/index/${tournee.keytournee}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                 <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                             </svg>
@@ -230,7 +230,7 @@ function renderTourneesByGroup(groupKey, filterFn) {
                                 <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                             </svg>
                         </a>
-                        <a href="/espace/trans/tournees-fret/etapes/index/${tournee.keytournee}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
+                        <a href="/v1/espace/transporteur/tournees-fret/etapes/index/${tournee.keytournee}" class="btn btn-sm btn-outline-warning" title="Voir les étapes">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-steps" viewBox="0 0 16 16">
                                 <path d="M.5 0a.5.5 0 0 1 .5.5v15a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 .5 0M2 1.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1-.5-.5zm2 4a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z"/>
                             </svg>
@@ -370,13 +370,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const response = await store(fretKey, params);
-
                 showMessage('Tournée enregistrée avec succès.', 'top-end', 'success');
+
+                const total = response.tournees_total;
+                const limite = response.limite;
 
                 setTimeout(() => {
                     form.reset();
-                    window.location.reload();
-                }, 2000);
+
+                    if (total >= limite) {
+                        window.location.href = `/v1/espace/transporteur/tournees-fret/${response.keyfret}`;
+                    } else {
+                        window.location.reload();
+                    }
+                }, 1500);
+
             } catch (error) {
                 let messageErreur = 'Une erreur est survenue lors de l’enregistrement.';
 
@@ -386,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 showMessage(messageErreur, 'top-end', 'error');
             }
+
         });
     }
 });

@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Trans\AuthController;
-use App\Http\Controllers\Trans\FretController;
-use App\Http\Controllers\Trans\TourneeController;
+use App\Http\Controllers\V1\Transporteur\AuthController;
+use App\Http\Controllers\V1\Transporteur\FretController;
+use App\Http\Controllers\V1\Transporteur\TourneeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,31 +24,33 @@ Route::get('/', function () {
     return view('trans.page.dashboard');
 })->name('dashboard');
 
-// Route de renvoie de la page de connexion
-Route::get('/espace/trans/connexion', [AuthController::class, 'loginpage'])->name('connexion');
+Route::prefix('/v1/espace/transporteur')->group(function () {
+    // Route de renvoie de la page de connexion
+    Route::get('/connexion', [AuthController::class, 'loginpage'])->name('connexion');
 
-// Route de renvoie de la page d'enregistrement
-Route::get('/espace/trans/enregistrement', [AuthController::class, 'registerpage'])->name('enregistrement');
+    // Route de renvoie de la page d'enregistrement
+    Route::get('/enregistrement', [AuthController::class, 'registerpage'])->name('enregistrement');
 
-// Route de renvoie de la page de mot de passe oublié
-Route::get('/espace/trans/mot-passe-oublie', [AuthController::class, 'forgotpasswordpage'])->name('motdepasse-oublié');
+    // Route de renvoie de la page de mot de passe oublié
+    Route::get('/mot-passe-oublie', [AuthController::class, 'forgotpasswordpage'])->name('motdepasse-oublié');
 
-// Route de renvoie de la page des frets attribués
-Route::get('/espace/trans/frets', [FretController::class, 'index'])->name('fret');
+    // Route de renvoie de la page des frets attribués
+    Route::get('/frets', [FretController::class, 'index'])->name('fret');
 
-// Route de renvoie de détails d'un fret
-Route::get('/espace/trans/frets/details/{key}', [FretController::class, 'show'])->name('fret.show');
+    // Route de renvoie de détails d'un fret
+    Route::get('/frets/details/{key}', [FretController::class, 'show'])->name('fret.show');
 
-// Route de renvoie de la page des tournees
-Route::get('/espace/trans/tournees-fret/{keyfret}', [TourneeController::class, 'index'])->name('tournee.show');
+    // Route de renvoie de la page des tournees
+    Route::get('/tournees-fret/{keyfret}', [TourneeController::class, 'index'])->name('tournee.index');
 
-// Route de renvoie de la page d'ajout de tournées
-Route::get('/espace/trans/ajouter-tournee/{keyfret}', [TourneeController::class, 'create'])->name('tournee.create');
+    // Route de renvoie de la page d'ajout de tournées
+    Route::get('/ajouter-tournee/{keyfret}', [TourneeController::class, 'create'])->name('tournee.create');
 
-// Route de renvoie de la page des étapes d'une tournées
-Route::get('/espace/trans/tournees-fret/etapes/index/{key}', [TourneeController::class, 'indexEtapes'])->name('etape.index');
+    // Route de renvoie de la page des étapes d'une tournées
+    Route::get('/tournees-fret/etapes/index/{key}', [TourneeController::class, 'indexEtapes'])->name('etape.index');
 
-// Route de renvoie de la page d'ajout d'étapes d'un fret
-Route::get('/espace/trans/tournees-fret/etapes/create/{key}', [TourneeController::class, 'createEtapes'])->name('etape.create');
+    // Route de renvoie de la page d'ajout d'étapes d'un fret
+    Route::get('/tournees-fret/etapes/create/{key}', [TourneeController::class, 'createEtapes'])->name('etape.create');
 
+});
 

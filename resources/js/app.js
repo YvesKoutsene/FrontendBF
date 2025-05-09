@@ -1,5 +1,5 @@
 import './bootstrap';
-import './main/auth';
-import './main/fret';
-import './main/tournee';
-import './main/etape';
+import './v1/main/auth';
+import './v1/main/fret';
+import './v1/main/tournee';
+import './v1/main/etape';

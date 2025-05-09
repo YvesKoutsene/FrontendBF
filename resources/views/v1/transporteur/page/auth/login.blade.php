@@ -10,6 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
     <link rel="stylesheet" type="text/css" media="screen" href="\assets/css/style.css" />
+    <script src="\assets/js/perfect-scrollbar.min.js"></script>
+    <script defer src="\assets/js/popper.min.js"></script>
+    <script defer src="\assets/js/tippy-bundle.umd.min.js"></script>
+    <script defer src="\assets/js/sweetalert.min.js"></script>
 </head>
 
 <body x-data="main" class="relative overflow-x-hidden font-nunito text-sm font-normal antialiased"
@@ -148,6 +152,7 @@
     <script src="\assets/js/custom.js"></script>
 
     @vite(['resources/js/app.js', 'resources/css/app.css'])
+
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-@extends('trans.include.layouts.app')
+@extends('v1.transporteur.include.layouts.app')
 @section('content')
     <div>
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
@@ -16,7 +16,7 @@
                     <div id="fretshow-container" class="space-y-5">
                     </div>
                     <div class="flex space-x-4 justify-end items-end mt-6">
-                        <a href="{{ route('tournee.show',$keyfret) }}" class="btn btn-warning">
+                        <a href="{{ route('tournee.index',$keyfret) }}" class="btn btn-warning">
                             Voir Tournées
                         </a>
                     </div>

@@ -62,6 +62,7 @@
                         </svg>
                     </button>
                 </div>
+            <!--
                 <div>
                     <a href="javascript:;" x-cloak x-show="$store.app.theme === 'light'" href="javascript:;"
                         class="flex items-center rounded-full bg-white-light/40 p-2 hover:bg-white-light/90 hover:text-primary dark:bg-dark/40 dark:hover:bg-dark/60"
@@ -108,7 +109,7 @@
                         </svg>
                     </a>
                 </div>
-
+            -->
                 <div class="dropdown flex-shrink-0" x-data="dropdown" @click.outside="open = false">
                     <a href="javascript:;" class="group relative" @click="toggle()">
                         <span>

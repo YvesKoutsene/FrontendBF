@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('auth_token');
 
     if (!token) {
-        window.location.href = '/espace/trans/connexion';
+        window.location.href = '/v1/espace/transporteur/connexion';
         return;
     }
 });
@@ -26,6 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }
     } else {
-        window.location.href = '/espace/trans/connexion';
+        window.location.href = '/v1/espace/transporteur/connexion';
     }
 });

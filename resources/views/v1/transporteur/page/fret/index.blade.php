@@ -1,4 +1,4 @@
-@extends('trans.include.layouts.app')
+@extends('v1.transporteur.include.layouts.app')
 @section('content')
     <div>
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">

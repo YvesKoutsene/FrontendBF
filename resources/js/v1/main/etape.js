@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 form.reset();
                 window.location.reload();
-            }, 2000);
+            }, 1500);
         } else {
             showMessage(result.message || 'Erreur lors de l’enregistrement.', 'top-end', 'error');
         }

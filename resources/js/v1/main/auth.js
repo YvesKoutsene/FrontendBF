@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             sessionStorage.setItem('loginMessage', 'Content de vous revoir!');
 
-            window.location.href = '/espace/trans/frets';
+            window.location.href = '/v1/espace/transporteur/frets';
         } catch (error) {
             showMessage(error.message || 'Erreur de connexion.', 'top-end', 'error');
         }
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 await deconnexion();
                 sessionStorage.setItem('logoutMessage', 'Au revoir à bientôt!');
-                window.location.href = '/espace/trans/connexion';
+                window.location.href = '/v1/espace/transporteur/connexion';
             } catch (error) {
                 showMessage(error.message || 'Erreur lors de la déconnexion.', 'top-end', 'error');
             }
