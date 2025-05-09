@@ -10,8 +10,8 @@
         <div class="pt-5">
             <div>
                 <div class="panel">
-                    <div class="mb-5 flex items-center justify-between">
-                        <h5 class="text-lg font-semibold dark:text-white-light">Détails du fret N° {{ $numerofret }}</h5>
+                    <div class="mb-5 flex items-center justify-center">
+                        <h5 id="numeroFret" class="text-lg font-semibold dark:text-white-light"></h5>
                     </div>
                     <div id="fretshow-container" class="space-y-5">
                     </div>

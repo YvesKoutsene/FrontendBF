@@ -87,10 +87,9 @@ export async function fetchEtapesTournee($keytournee) {
 
         if (!authToken) {
             console.error('Token manquant.');
-            return [];
+            return { etapes: [], tournee: null };
         }
 
-        // Appel à l'API pour récupérer les étapes du fret
         const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/index/${keytournee}`, {
             method: 'GET',
             headers: {
@@ -101,24 +100,19 @@ export async function fetchEtapesTournee($keytournee) {
 
         if (response.status === 401) {
             console.warn("Utilisateur non authentifié.");
-            return [];
-        }
-
-        if (response.status === 404) {
-            console.warn("Tournée non trouvée.");
-            return [];
+            return { etapes: [], tournee: null };
         }
 
         if (response.status === 204) {
             console.info("Aucune étape trouvée.");
-            return [];
+            return { etapes: [], tournee: null };
         }
 
         const text = await response.text();
 
         if (!text) {
             console.warn("Réponse vide du serveur.");
-            return [];
+            return { etapes: [], tournee: null };
         }
 
         let data;
@@ -126,16 +120,19 @@ export async function fetchEtapesTournee($keytournee) {
             data = JSON.parse(text);
         } catch (jsonError) {
             console.error("Erreur de parsing JSON :", jsonError);
-            return [];
+            return { etapes: [], tournee: null };
         }
 
         console.log("Etapes récupérées :", data.etapes);
-        //console.log("Tournée récupérée :", data.tournee);
-        return data.etapes || [];
+        console.log("Tournée récupérée :", data.tournee);
+        return {
+            etapes : data.etapes || [],
+            tournee : data.tournee || null
+        };
 
     } catch (error) {
-        console.error("Erreur lors de la récupération des étapes :", error);
-        return [];
+        console.error("Erreur lors de la récupération des étapes:", error);
+        return { etapes: [], tournee: null };
     }
 }
 

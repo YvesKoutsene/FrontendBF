@@ -13,8 +13,8 @@ class FretController extends Controller
     }
 
     // Fonction de renvoie de détails d'un fret
-    public function show($key, $num)
+    public function show($keyfret)
     {
-        return view('trans.page.fret.show', ['keyfret' => $key, 'numerofret' => $num]);
+        return view('trans.page.fret.show', compact('keyfret'));
     }
 }

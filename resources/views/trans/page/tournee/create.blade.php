@@ -11,26 +11,26 @@
         <div class="pt-5">
             <div>
                 <div class="panel">
-                    <div class="mb-5 flex items-center justify-between">
-                        <h5 class="text-lg font-semibold dark:text-white-light">Formulaire de création de tournée du fret N° {{ $numerofret }}</h5>
+                    <div class=" mb-4 gap-4 flex items-center justify-center">
+                        <h5 id="titreFret" class="text-lg font-semibold dark:text-white-light"></h5>
                     </div>
+                    <div class=" mb-4 gap-4 flex items-center justify-between">
+                        <h5 class="text-lg font-semibold dark:text-white-light">Formulaire de création de tournee</h5>
+                    </div>
+
                     <form id="tournee-form" class="space-y-5">
                         @csrf
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <input type="hidden" name="keyfret" value="{{ $keyfret }}" />
                             <div>
-                                <label for="lieuChargement">Lieu de chargement <span class="text-danger"
-                                        title="Obligatoire">*</span></label>
-                                <input type="text" placeholder="{{ $lieuChargement }}"
-                                    class="form-input disabled:pointer-events-none" readonly />
-                                <input type="hidden" name="idlieudepart" value="{{ $idlieuChargement }}" />
+                                <label for="lieuChargement">Lieu de chargement <span class="text-danger" title="Obligatoire">*</span></label>
+                                <input id="lieuChargementNom" type="text" class="form-input disabled:pointer-events-none" readonly />
+                                <input id="lieuChargementId" type="hidden" name="idlieudepart" />
                             </div>
                             <div>
-                                <label for="lieuDechargement">Lieu de déchargement <span class="text-danger"
-                                        title="Obligatoire">*</span></label>
-                                <input type="text" placeholder="{{ $lieuDechargement }}"
-                                    class="form-input disabled:pointer-events-none" readonly />
-                                <input type="hidden" name="idlieuarrivée" value="{{ $idlieuDechargement }}" />
+                                <label for="lieuDechargement">Lieu de déchargement <span class="text-danger" title="Obligatoire">*</span></label>
+                                <input id="lieuDechargementNom" type="text" class="form-input disabled:pointer-events-none" readonly />
+                                <input id="lieuDechargementId" type="hidden" name="idlieuarrivée" />
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -96,6 +96,11 @@
 
         </div>
     </div>
+
+   <script>
+       window.keyfret = "{{ $keyfret }}";
+   </script>
+
    <script>
        function validateInput() {
            const input = document.getElementById('poids');

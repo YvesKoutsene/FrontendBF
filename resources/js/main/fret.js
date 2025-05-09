@@ -15,7 +15,6 @@ let pagination = {
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
-
     allFrets = await fetchFretsAttribues();
 
     setupControls();
@@ -73,7 +72,7 @@ function renderFretsByGroup(groupKey, filterFn) {
             f.lieuchargement.nom.toLowerCase().includes(searchQuery) ||
             f.lieudechargement.nom.toLowerCase().includes(searchQuery) ||
             f.typemarchandise.libelle.toLowerCase().includes(searchQuery) ||
-            new Date(f.createdAt).toLocaleString().includes(searchQuery) ||
+            new Date(f.created_at).toLocaleString().includes(searchQuery) ||
             f.poidsmarchandise.toString().includes(searchQuery)
         );
     }
@@ -103,7 +102,7 @@ function renderFretsByGroup(groupKey, filterFn) {
                 <td>${fret.poidsmarchandise}</td>
                 <td class="text-center">
                     <div class="flex justify-center gap-2">
-                        <a href="/espace/trans/frets/details/${fret.keyfret}/${fret.numerofret}" class="btn btn-sm btn-outline-info" title="Voir les détails">
+                        <a href="/espace/trans/frets/details/${fret.keyfret}" class="btn btn-sm btn-outline-info" title="Voir les détails">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -195,7 +194,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             <div class="bg-gray-50 p-4 rounded-lg border">
                 <h2 class="text-lg font-semibold text-green-700 mb-4 border-b pb-2">Informations générales</h2>
                 <ul class="space-y-2 text-sm text-gray-700">
-                    <li><strong>Numéro fret :</strong> ${fret.numerofret ?? 'N/A'}</li>
                     <li><strong>Numéro dossier :</strong> ${fret.numerodossier ?? 'N/A'}</li>
                     <li><strong>Chargement :</strong> ${fret.lieuchargement?.nom ?? 'N/A'} (${formatDate(fret.jourchargement)})</li>
                     <li><strong>Déchargement :</strong> ${fret.lieudechargement?.nom ?? 'N/A'} (${formatDate(fret.jourdechargement)})</li>

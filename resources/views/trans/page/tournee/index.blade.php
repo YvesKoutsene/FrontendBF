@@ -10,11 +10,8 @@
         <div class="pt-5">
             <div class="panel">
                <div class=" mb-4 gap-4 flex items-center justify-center">
-                   <h5 class="text-lg font-semibold dark:text-white-light">
-                        Tournées créées pour le num. fret : /
-                   </h5>
+                   <h5 id="titreFret" class="text-lg font-semibold dark:text-white-light"></h5>
                </div>
-
               <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
                 <div>
                   <label for="entries-select" class="text-sm font-medium text-gray-700">Nombre d'entrées
@@ -62,7 +59,7 @@
 
               <div id="statut10-wrapper" class="tournee-table-group mb-5">
                 <div class="mb-5 flex items-end justify-end">
-                    <a href="" class="btn btn-warning">
+                    <a id="btnCreerTournee" href="{{ route('tournee.create', $keyfret) }}" class="btn btn-warning">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-plus-fill me-4" viewBox="0 0 16 16">
                             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0"/>
                         </svg>
@@ -105,10 +102,10 @@
 
               <div id="statut20-wrapper" class="tournee-table-group hidden mb-5">
                 <div class="mb-5 flex items-end justify-end">
-                    <a href="" class="btn btn-warning">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
+                    <a id="btnAjouterEtape" href="{{ route('etape.create', $keyfret) }}" class="btn btn-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill me-4" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                         </svg>
+                        </svg>
                         Ajouter les étapes
                     </a>
                 </div>
@@ -191,5 +188,7 @@
  <script>
         window.keyfret = "{{ $keyfret }}";
  </script>
+
+@include('trans.page.tournee.modal') <!-- Pour les deux fenêtres modales (Démarrer et clôturer tournee)-->
 
 @endsection
