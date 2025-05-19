@@ -7,9 +7,13 @@
     <title>Connexion - Anaxar Transporteur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="\assets/images/anaxar/logoanaxar.jpeg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
         rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" media="screen" href="\assets/css/perfect-scrollbar.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="\assets/css/style.css" />
+    <link defer rel="stylesheet" type="text/css" media="screen" href="\assets/css/animate.css" />
     <script src="\assets/js/perfect-scrollbar.min.js"></script>
     <script defer src="\assets/js/popper.min.js"></script>
     <script defer src="\assets/js/tippy-bundle.umd.min.js"></script>
@@ -40,7 +44,7 @@
     <!-- scroll to top button -->
     <div class="fixed bottom-6 right-6 z-50" x-data="scrollToTop">
         <template x-if="showTopButton">
-            <button type="button" class="btn btn-outline-primary animate-pulse rounded-full p-2" @click="goToTop">
+            <button type="button" class="btn btn-outline-warning animate-pulse rounded-full p-2" @click="goToTop">
                 <svg width="24" height="24" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd"
@@ -55,6 +59,7 @@
     </div>
 
     <div class="main-container min-h-screen text-black dark:text-white-dark">
+        <!-- start main content section -->
         <div x-data="auth">
             <div class="absolute inset-0">
                 <img src="\assets/images/auth/bg-gradient.png" alt="image" class="h-full w-full object-cover" />
@@ -62,21 +67,32 @@
             <div
                 class="relative flex min-h-screen items-center justify-center bg-blur bg-cover bg-center bg-no-repeat px-6 py-10 dark:bg-[#060818] sm:px-16">
                 <div
-                    class="relative w-full max-w-[870px] rounded-md bg-[linear-gradient(45deg,#fff9f9_0%,rgba(255,255,255,0)_25%,rgba(255,255,255,0)_75%,_#fff9f9_100%)] p-2 dark:bg-[linear-gradient(52.22deg,#0E1726_0%,rgba(14,23,38,0)_18.66%,rgba(14,23,38,0)_51.04%,rgba(14,23,38,0)_80.07%,#0E1726_100%)]">
+                    class="relative flex w-full max-w-[1502px] flex-col justify-between overflow-hidden rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 lg:min-h-[758px] lg:flex-row lg:gap-10 xl:gap-0">
+                    <div class="relative hidden w-full items-center justify-center bg-warning p-5 lg:inline-flex lg:max-w-[835px] xl:-ms-32 ltr:xl:skew-x-[14deg] rtl:xl:skew-x-[-14deg]">
+                        <div
+                            class="absolute inset-y-0 w-8 from-primary/10 via-transparent to-transparent ltr:-right-10 ltr:bg-gradient-to-r rtl:-left-10 rtl:bg-gradient-to-l xl:w-16 ltr:xl:-right-20 rtl:xl:-left-20">
+                        </div>
+                        <div class="ltr:xl:-skew-x-[14deg] rtl:xl:skew-x-[14deg]">
+                            <a href="index.html" class="hidden w-full max-w-[430px] lg:block">
+                                <img src="\assets/images/anaxar/Anaxarlogosimple.png" alt="Logo Anaxar" class="ml-[5px] w-80 flex-none w-full " />
+                            </a>
+                        </div>
+                    </div>
                     <div
-                        class="relative flex flex-col justify-center rounded-md bg-white/60 backdrop-blur-lg dark:bg-black/50 px-6 lg:min-h-[758px] py-20">
-                        <div class="mx-auto w-full max-w-[440px]">
+                        class="relative flex w-full flex-col items-center justify-center gap-6 px-4 pb-16 pt-6 sm:px-6 lg:max-w-[667px]">
+                        <div class="w-full max-w-[440px] lg:mt-16">
                             <div class="mb-10">
-                                <img src="\assets/images/anaxar/Anaxarlogosimple.png" alt="Logo Anaxar" class="ml-[5px] w-80 flex-none"/>
-                                <h1 class="text-3xl font-extrabold uppercase !leading-snug text-primary md:text-4xl"></h1>
+                                <h1 class="text-3xl font-extrabold uppercase !leading-snug text-black md:text-4xl">Connexion</h1>
                                 <p class="text-base font-bold leading-normal text-white-dark">Connectez-vous avec vos identifiants d'inscription.</p>
                             </div>
+
                             <form id="login-form" class="space-y-5 dark:text-white">
                                 @csrf
                                 <div>
                                     <label for="email">Email</label>
                                     <div class="relative text-white-dark">
-                                        <input id="email" name="email" type="email" required placeholder="Entrer votre Email"
+                                        <input id="email" name="email" type="email" required
+                                            placeholder="Entrer votre email"
                                             class="form-input ps-10 placeholder:text-white-dark" />
                                         <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -93,7 +109,8 @@
                                 <div>
                                     <label for="motdepasse">Mot de passe</label>
                                     <div class="relative text-white-dark">
-                                        <input id="motdepasse" name="motdepasse" type="password" required placeholder="Entrer votre mot de passe"
+                                        <input id="motdepasse" name="motdepasse" type="password" required
+                                            placeholder="Entrer votre mot de passe"
                                             class="form-input ps-10 placeholder:text-white-dark" />
                                         <span class="absolute start-4 top-1/2 -translate-y-1/2">
                                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -136,14 +153,23 @@
 
                             <div class="text-center dark:text-white">
                                 Vous n'avez pas de compte ?
-                                <a href="{{ route('enregistrement') }}" class="uppercase text-warning underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
+                                <a href="{{ route('enregistrement') }}"
+                                    class="uppercase text-warning underline transition hover:text-black dark:hover:text-white">S'inscrire</a>
                             </div>
+
                         </div>
+
+                        <p class="absolute bottom-6 w-full text-center dark:text-white">
+                            © <span id="footer-year">2025</span>. Anaxar Tous droits réservés.
+                        </p>
+
                     </div>
                 </div>
             </div>
         </div>
+        <!-- end main content section -->
     </div>
+
     <script src="\assets/js/alpine-collaspe.min.js"></script>
     <script src="\assets/js/alpine-persist.min.js"></script>
     <script defer src="\assets/js/alpine-ui.min.js"></script>

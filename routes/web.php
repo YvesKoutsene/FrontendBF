@@ -21,7 +21,7 @@ use App\Http\Controllers\V1\Transporteur\TourneeController;
 });*/
 
 Route::get('/', function () {
-    return view('trans.page.dashboard');
+    return view('v1.transporteur.page.dashboard');
 })->name('dashboard');
 
 Route::prefix('/v1/espace/transporteur')->group(function () {

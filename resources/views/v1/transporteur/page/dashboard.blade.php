@@ -1,4 +1,4 @@
-@extends('trans.include.layouts.app')
+@extends('v1.transporteur.include.layouts.app')
 @section('content')
     <div x-data="sales">
        <!-- basic -->

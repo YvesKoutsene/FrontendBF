@@ -1,5 +1,12 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+    // Style pour les boutons warning
+    const warningButtonStyle = `
+        background-color: #f59e0b !important;
+        color: white !important;
+        border: none !important;
+    `;
+
     // Pour démarrer une tournée
     async function showAlertStart(keytournee) {
         const steps = ['1', '2', '3'];
@@ -12,6 +19,10 @@
             },
             validationMessage: 'Ce champ est obligatoire',
             padding: '2em',
+            didOpen: () => {
+                const confirmBtn = Swal.getConfirmButton();
+                confirmBtn.style.cssText = warningButtonStyle;
+            }
         });
 
         const values = {};
@@ -23,11 +34,10 @@
                 inputAttributes: {
                     placeholder: 'Position actuelle',
                     required: true,
-                    name: 'postion',
+                    name: 'position',
                 },
                 currentProgressStep: 0,
             });
-
             if (!positionResult.value) return;
             values.position = positionResult.value;
 
@@ -41,7 +51,6 @@
                 },
                 currentProgressStep: 1,
             });
-
             if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
                 Swal.fire({
                     icon: 'error',
@@ -62,7 +71,6 @@
                 },
                 currentProgressStep: 2,
             });
-
             if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
                 Swal.fire({
                     icon: 'error',
@@ -79,18 +87,20 @@
                 confirmButtonText: 'Oui, démarrer',
                 showCancelButton: true,
                 cancelButtonText: 'Annuler',
+                didOpen: () => {
+                    const confirmBtn = Swal.getConfirmButton();
+                    confirmBtn.style.cssText = warningButtonStyle;
+                }
             });
 
             if (confirmation.isConfirmed) {
                 const result = await demarrerTournee(keytournee, values);
-
                 await Swal.fire({
                     icon: 'success',
                     title: 'Tournée démarrée avec succès !',
                     timer: 1500,
                     showConfirmButton: false
                 });
-
                 window.location.reload();
             }
 
@@ -104,7 +114,7 @@
         }
     }
 
-    // Pour va vérification de la longitude et latitude
+    // Pour vérifier la latitude/longitude
     function isValidCoordinate(value) {
         const number = parseFloat(value);
         return !isNaN(number) && ((value.includes('.') || value.includes(',')) ? (number >= -90 && number <= 90) : (number >= -180 && number <= 180));
@@ -122,6 +132,10 @@
             },
             validationMessage: 'Ce champ est obligatoire',
             padding: '2em',
+            didOpen: () => {
+                const confirmBtn = Swal.getConfirmButton();
+                confirmBtn.style.cssText = warningButtonStyle;
+            }
         });
 
         const values = {};
@@ -133,11 +147,10 @@
                 inputAttributes: {
                     placeholder: 'Position actuelle',
                     required: true,
-                    name: 'postion',
+                    name: 'position',
                 },
                 currentProgressStep: 0,
             });
-
             if (!positionResult.value) return;
             values.position = positionResult.value;
 
@@ -151,7 +164,6 @@
                 },
                 currentProgressStep: 1,
             });
-
             if (!latitudeResult.value || !isValidCoordinate(latitudeResult.value)) {
                 Swal.fire({
                     icon: 'error',
@@ -172,7 +184,6 @@
                 },
                 currentProgressStep: 2,
             });
-
             if (!longitudeResult.value || !isValidCoordinate(longitudeResult.value)) {
                 Swal.fire({
                     icon: 'error',
@@ -189,18 +200,20 @@
                 confirmButtonText: 'Oui, clôturer',
                 showCancelButton: true,
                 cancelButtonText: 'Annuler',
+                didOpen: () => {
+                    const confirmBtn = Swal.getConfirmButton();
+                    confirmBtn.style.cssText = warningButtonStyle;
+                }
             });
 
             if (confirmation.isConfirmed) {
                 const result = await cloturerTournee(keytournee, values);
-
                 await Swal.fire({
                     icon: 'success',
                     title: 'Tournée clôturée avec succès !',
                     timer: 1500,
                     showConfirmButton: false
                 });
-
                 window.location.reload();
             }
 

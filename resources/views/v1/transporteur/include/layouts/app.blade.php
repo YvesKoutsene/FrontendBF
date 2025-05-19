@@ -58,7 +58,7 @@
     <div class="fixed bottom-6 z-50 ltr:right-6 rtl:left-6" x-data="scrollToTop">
         <template x-if="showTopButton">
             <button type="button"
-                class="btn btn-outline-primary animate-pulse rounded-full bg-[#fafafa] p-2 dark:bg-[#060818] dark:hover:bg-primary"
+                class="btn btn-outline-warning animate-pulse rounded-full bg-[#fafafa] p-2 dark:bg-[#060818] dark:hover:bg-primary"
                 @click="goToTop">
                 <svg width="24" height="24" class="h-4 w-4" viewBox="0 0 24 24" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
