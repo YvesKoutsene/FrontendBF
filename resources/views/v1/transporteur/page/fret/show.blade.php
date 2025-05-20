@@ -3,7 +3,7 @@
     <div>
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
             <li><a href="">Frets</a></li>
-            <li  class="before:content-['/'] before:px-1.5"><a href="{{ route('fret') }}">Liste des frets</a></li>
+            <li  class="before:content-['/'] before:px-1.5"><a href="javascript:history.back();">Liste des frets</a></li>
             <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Détails fret</a></li>
         </ol>
 
@@ -16,9 +16,16 @@
                     <div id="fretshow-container" class="space-y-5">
                     </div>
                     <div class="flex space-x-4 justify-end items-end mt-6">
-                        <a href="{{ route('tournee.index',$keyfret) }}" class="btn btn-warning">
+                        <a href="{{ route('tournee.index',$keyfret) }}" class="btn btn-warning" id="btnVoirTournee">
                             Voir Tournées
                         </a>
+
+                        <!--
+                        <a href="{{ route('fret.propostions',$keyfret) }}" class="btn btn-warning" id="btnVoirPropositions">
+                            Voir Propositions
+                        </a>
+                        -->
+
                     </div>
                 </div>
             </div>

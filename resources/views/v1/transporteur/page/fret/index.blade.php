@@ -3,7 +3,7 @@
     <div>
         <ol class="flex text-gray-500 font-semibold dark:text-white-dark">
             <li><a href="">Frets</a></li>
-            <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Liste des frets</a></li>
+            <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Liste des frets attribués</a></li>
         </ol>
         <div class="pt-5">
             <div class="panel">
@@ -35,14 +35,14 @@
                           <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
                           <path d="M11 6h2v6h-2zm0 8h2v2h-2z"/>
                       </svg>
-                      Frets en attente à traiter
+                      Frets en attente de traitement
                   </button>
                   <button data-statut="complets" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
                           <path d="M14.5 8.5l-1.5 1.5-3-3-1.5 1.5 4.5 4.5 3-3z"/>
                       </svg>
-                      Frets en attente traités
+                      Frets traités
                   </button>
                   <button data-statut="statut40" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">

@@ -52,5 +52,11 @@ Route::prefix('/v1/espace/transporteur')->group(function () {
     // Route de renvoie de la page d'ajout d'étapes d'un fret
     Route::get('/tournees-fret/etapes/create/{key}', [TourneeController::class, 'createEtapes'])->name('etape.create');
 
+    // Route de renvoie de la page des frets introduits
+    Route::get('/frets/introduits', [FretController::class, 'index2'])->name('fret.introduits');
+
+    // Route de renvoie des propostions de prix d'un fret
+    Route::get('/frets/introduits/propostions-prix/{keyfret}', [FretController::class, 'show2'])->name('fret.propostions');
+
 });
 
