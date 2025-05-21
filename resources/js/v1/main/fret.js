@@ -240,16 +240,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { fret } = await showFret(keyfret);
 
     const btnVoirTournee = document.getElementById('btnVoirTournee');
-    const btnVoirPropositions = document.getElementById('btnVoirPropositions');
 
     // Vérifie le statut du fret
     if (fret.statut === 20) {
-        btnVoirTournee.style.display = 'none'; // Masque le bouton "Voir Tournée"
-        btnVoirPropositions.style.display = 'block'; // Affiche le bouton "Voir Propositions"
+        btnVoirTournee.classList.add('disabled', 'opacity-50', 'pointer-events-none');
+        btnVoirTournee.setAttribute('title', 'Fret non attribué.');
     } else {
-        btnVoirTournee.style.display = 'block'; // Affiche le bouton "Voir Tournée"
-        btnVoirPropositions.style.display = 'none'; // Masque le bouton "Voir Propositions"
         btnVoirTournee.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
-        btnVoirTournee.removeAttribute('title'); // Retire l'attribut title si le fret est attribué
+        btnVoirTournee.removeAttribute('title');
     }
 });

@@ -1,5 +1,6 @@
 import { fetchFretsIntroduits } from '../api/fretintroduits';
 import { fetchPropositionsFret } from '../api/fretintroduits';
+import { proposerPrixFret } from '../api/fretintroduits';
 import { showMessage } from '../pages/notif';
 import { showFret } from '../api/frets';
 
@@ -192,12 +193,23 @@ function afficherPropositionsDansLeDOM(propositions) {
     const tbody = document.getElementById('propositions-body');
     tbody.innerHTML = '';
 
+    const getStatutLabel = (statut) => {
+        switch (statut) {
+            case 0: return 'envoyée';
+            case 1: return 'acceptée';
+            case 2: return 'rejetée';
+            default: return '';
+        }
+    };
+
     const filteredPropositions = propositions.filter(proposition => {
+        const statutLabel = getStatutLabel(proposition.statut);
         return (
-            proposition.prix.toString().includes(searchQuery) ||
-            (proposition.commentaire?.toLowerCase().includes(searchQuery.toLowerCase())) ||
-            //(proposition.statut?.toLowerCase().includes(searchQuery.toLowerCase()))
-            new Date(proposition.createdat).toLocaleString().includes(searchQuery)
+            proposition.position?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            proposition.prix?.toString().includes(searchQuery) ||
+            proposition.commentaire?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            statutLabel.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            new Date(proposition.created_at).toLocaleString().includes(searchQuery)
         );
     });
 
@@ -214,14 +226,14 @@ function afficherPropositionsDansLeDOM(propositions) {
     const currentPropositions = filteredPropositions.slice(start, end);
 
     currentPropositions.forEach((proposition, index) => {
-        const createdAt = new Date(proposition.createdat);
+        const createdAt = new Date(proposition.created_at);
         const formattedDate = `${createdAt.getDate().toString().padStart(2, '0')}/${(createdAt.getMonth() + 1).toString().padStart(2, '0')}/${createdAt.getFullYear()} à ${createdAt.getHours().toString().padStart(2, '0')}:${createdAt.getMinutes().toString().padStart(2, '0')}`;
 
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${start + index + 1}</td>
             <td>${proposition.prix}</td>
-            <td>${proposition.commentaire || ''}</td>
+            <td>${proposition.commentaire || 'N/A'}</td>
             <td>${getStatutBadge(proposition.statut)}</td>
             <td>${formattedDate}</td>
             <td class="text-center">
@@ -239,13 +251,12 @@ function afficherPropositionsDansLeDOM(propositions) {
                                       6a8 8 0 0 1-2.088-.272 1 1 0 0 0-.711.074c-.387.196-1.24.57-2.634.893a11 11 0 0 0 .398-2"/>
                            </svg>
                        </a>
+                        <a href="" class="btn btn-sm btn-outline-danger" title="Supprimer cette proposition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                            </svg>
+                        </a>
                     ` : ''}
-
-                    <a href="" class="btn btn-sm btn-outline-danger" title="Supprimer cette proposition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-                        </svg>
-                    </a>
                 </div>
             </td>
         `;
@@ -301,7 +312,6 @@ function getStatutBadge(statut) {
 
 // Fin
 
-
 // Pour l'affichage du titre propositions du fret
 document.addEventListener('DOMContentLoaded', async () => {
     const keyfret = window.keyfret;
@@ -315,3 +325,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         numero1Fret.innerHTML = '<span class="text-red-500">(Fret introuvable)</span>';
     }
 });
+
+// Pour faire une proposition de prix
+window.proposerPrixFret = proposerPrixFret;
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const keyfret = window.keyfret;
+    const { propositions } = await fetchPropositionsFret(keyfret);
+
+    const btnFaireProposition = document.getElementById('btnFaireProposition');
+
+    const propositionEnCoursOuAcceptee = propositions.some(proposition =>
+        proposition.statut === 0 || proposition.statut === 1
+    );
+
+    if (propositionEnCoursOuAcceptee) {
+        btnFaireProposition.classList.add('disabled', 'opacity-50', 'pointer-events-none');
+        btnFaireProposition.setAttribute('title', 'Fret en cours d\'examen.');
+    }
+});
+

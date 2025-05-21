@@ -108,4 +108,49 @@ export async function fetchPropositionsFret($keyfret) {
 }
 
 // Fonction pour proposer un prix à un fret
+export async function proposerPrixFret(keyfret, params) {
+    const authToken = localStorage.getItem('auth_token');
+    const utilisateurData = localStorage.getItem('utilisateur');
+    const utilisateur = utilisateurData ? JSON.parse(utilisateurData) : null;
+    const idtransporteur = utilisateur?.transporteur?.id;
 
+    if (!authToken || !idtransporteur) {
+        console.error('Token ou ID du transporteur manquant.');
+        return { success: false, message: 'Authentification invalide ou transporteur introuvable.' };
+    }
+
+    const updatedParams = {
+        ...params,
+        idtransporteur: idtransporteur
+    };
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/frets-introduits/propositions-prix/store/${keyfret}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedParams),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            const message = data.message || 'Erreur inconnue.';
+            throw {
+                response: {
+                    status: response.status,
+                    data: data,
+                    message: message
+                }
+            };
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Erreur réseau ou serveur :', error);
+        throw error;
+    }
+}
