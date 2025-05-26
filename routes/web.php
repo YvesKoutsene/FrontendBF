@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\V1\Transporteur\AuthController;
 use App\Http\Controllers\V1\Transporteur\FretController;
 use App\Http\Controllers\V1\Transporteur\TourneeController;
+use App\Http\Controllers\V1\Transporteur\CamionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,12 @@ Route::prefix('/v1/espace/transporteur')->group(function () {
 
     // Route de renvoie des propostions de prix d'un fret
     Route::get('/frets/introduits/propostions-prix/{keyfret}', [FretController::class, 'show2'])->name('fret.propostions');
+
+    // Route de renvoie de la page des camions
+    Route::get('/mescamions', [CamionController::class, 'index'])->name('camions.index');
+
+    // Route de renvoie du formulaire d'ajout de camion
+    Route::get('/mescamions/ajouter-camion/{keytransporteur}', [CamionController::class, 'create'])->name('camions.create');
 
 });
 

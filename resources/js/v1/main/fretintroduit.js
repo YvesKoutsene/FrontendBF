@@ -239,7 +239,8 @@ function afficherPropositionsDansLeDOM(propositions) {
             <td class="text-center">
                 <div class="flex justify-center gap-2">
                     ${proposition.statut === 2 ? `
-                       <a href="#" class="btn btn-sm btn-outline-info" title="Voir motif refus">
+                       <a href="javascript:void(0)" class="btn btn-sm btn-outline-info" title="Voir motif refus" onclick="voirRaisonRefus(this)"
+                           data-raisonrefus="${proposition.raisonrefus || 'Aucune raison précisée'}">
                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-chat-dots" viewBox="0 0 16 16">
                              <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2

@@ -101,4 +101,20 @@
         console.log(values);
     }
 
+     async function voirRaisonRefus(element) {
+         const raison = element.getAttribute('data-raisonrefus') || 'Aucune raison précisée';
+
+         Swal.fire({
+             title: `<div style="text-align: center;">Motif de refus : ${raison}</div>`,
+             icon: 'info',
+             confirmButtonText: 'Fermer',
+             padding: '2em',
+             customClass: {
+                 confirmButton: 'btn btn-warning'
+             },
+             buttonsStyling: false
+         });
+     }
+
 </script>
+

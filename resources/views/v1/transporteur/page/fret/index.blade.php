@@ -5,6 +5,7 @@
             <li><a href="">Frets</a></li>
             <li class="before:content-['/'] before:px-1.5"><a href="" class="text-warning dark:text-white-light hover:text-black/70 dark:hover:text-white-light/70">Liste des frets attribués</a></li>
         </ol>
+
         <div class="pt-5">
             <div class="panel">
 

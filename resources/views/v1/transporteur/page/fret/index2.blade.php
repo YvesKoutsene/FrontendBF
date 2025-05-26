@@ -29,14 +29,14 @@
               </div>
 
               <div class="flex flex-wrap gap-2 mb-4 ">
-                  <button data-isdemande="isdemande10" class="tab-button active bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
+                  <button data-isdemande="isdemande20" class="tab-button active bg-yellow-500 text-white px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2a10 10 0 00-10 10 10 10 0 0010 10 10 10 0 0010-10A10 10 0 0012 2zm0 18a8 8 0 110-16 8 8 0 010 16z"/>
                           <path d="M12 6v6h4v-2h-2V6h-2z"/>
                       </svg>
                       Frets déposés
                   </button>
-                  <button data-isdemande="isdemande20" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
+                  <button data-isdemande="isdemande10" class="tab-button bg-gray-100 text-gray-700 px-4 py-2 rounded-xl text-sm font-semibold shadow flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M3 3h18v18H3V3zm2 2v14h14V5H5z"/>
                           <path d="M7 8h10v2H7zm0 4h10v2H7z"/>
@@ -45,43 +45,8 @@
                   </button>
               </div>
 
-              <div id="isdemande10-wrapper" class="fret-introduit-table-group mb-5">
+              <div id="isdemande20-wrapper" class="fret-introduit-table-group mb-5">
                 <div class="overflow-auto rounded-lg shadow mb-4 table-responsive">
-                  <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
-                    <thead class="bg-gray-50 font-medium text-gray-700">
-                      <tr>
-                        <th class="px-4 py-2 border">#</th>
-                        <th class="px-4 py-2 border">Num. Fret</th>
-                        <th class="px-4 py-2 border">Num. Dossier</th>
-                        <th class="px-4 py-2 border">Lieu chargement</th>
-                        <th class="px-4 py-2 border">Lieu déchargement</th>
-                        <th class="px-4 py-2 border">Type marchandise</th>
-                        <th class="px-4 py-2 border">Date création</th>
-                        <th class="px-4 py-2 border">Poids (kg)</th>
-                        <th class="px-4 py-2 border text-center">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="isdemande10-body" class="divide-y divide-gray-100 bg-white"></tbody>
-                    <tfoot class="bg-gray-50 font-medium text-gray-700">
-                       <tr>
-                        <th class="px-4 py-2 border">#</th>
-                        <th class="px-4 py-2 border">Num. Fret</th>
-                        <th class="px-4 py-2 border">Num. Dossier</th>
-                        <th class="px-4 py-2 border">Lieu chargement</th>
-                        <th class="px-4 py-2 border">Lieu déchargement</th>
-                        <th class="px-4 py-2 border">Type marchandise</th>
-                        <th class="px-4 py-2 border">Date création</th>
-                        <th class="px-4 py-2 border">Poids (kg)</th>
-                        <th class="px-4 py-2 border text-center">Actions</th>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <div id="isdemande10-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
-              </div>
-
-              <div id="isdemande20-wrapper" class="fret-introduit-table-group hidden mb-5">
-                <div class="overflow-auto rounded-lg shadow mb-4  table-responsive">
                   <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
                     <thead class="bg-gray-50 font-medium text-gray-700">
                       <tr>
@@ -113,6 +78,41 @@
                   </table>
                 </div>
                 <div id="isdemande20-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
+              </div>
+
+              <div id="isdemande10-wrapper" class="fret-introduit-table-group hidden mb-5">
+                <div class="overflow-auto rounded-lg shadow mb-4  table-responsive">
+                  <table class="min-w-full text-sm text-left border border-gray-200 table-hover whitespace-nowrap">
+                    <thead class="bg-gray-50 font-medium text-gray-700">
+                      <tr>
+                        <th class="px-4 py-2 border">#</th>
+                        <th class="px-4 py-2 border">Num. Fret</th>
+                        <th class="px-4 py-2 border">Num. Dossier</th>
+                        <th class="px-4 py-2 border">Lieu chargement</th>
+                        <th class="px-4 py-2 border">Lieu déchargement</th>
+                        <th class="px-4 py-2 border">Type marchandise</th>
+                        <th class="px-4 py-2 border">Date création</th>
+                        <th class="px-4 py-2 border">Poids (kg)</th>
+                        <th class="px-4 py-2 border text-center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="isdemande10-body" class="divide-y divide-gray-100 bg-white"></tbody>
+                    <tfoot class="bg-gray-50 font-medium text-gray-700">
+                       <tr>
+                        <th class="px-4 py-2 border">#</th>
+                        <th class="px-4 py-2 border">Num. Fret</th>
+                        <th class="px-4 py-2 border">Num. Dossier</th>
+                        <th class="px-4 py-2 border">Lieu chargement</th>
+                        <th class="px-4 py-2 border">Lieu déchargement</th>
+                        <th class="px-4 py-2 border">Type marchandise</th>
+                        <th class="px-4 py-2 border">Date création</th>
+                        <th class="px-4 py-2 border">Poids (kg)</th>
+                        <th class="px-4 py-2 border text-center">Actions</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div id="isdemande10-pagination" class="flex flex-wrap gap-2 justify-end mt-2"></div>
               </div>
 
             </div>
