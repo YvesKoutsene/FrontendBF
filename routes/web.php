@@ -5,6 +5,7 @@ use App\Http\Controllers\V1\Transporteur\AuthController;
 use App\Http\Controllers\V1\Transporteur\FretController;
 use App\Http\Controllers\V1\Transporteur\TourneeController;
 use App\Http\Controllers\V1\Transporteur\CamionController;
+use App\Http\Controllers\V1\Transporteur\ChauffeurController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,9 @@ Route::prefix('/v1/espace/transporteur')->group(function () {
 
     // Route de renvoie du formulaire d'ajout de camion
     Route::get('/mescamions/ajouter-camion/{keytransporteur}', [CamionController::class, 'create'])->name('camions.create');
+
+    // Route de renvoie de la liste des chauffeurs du transporteur
+    Route::get('/meschauffeurs', [ChauffeurController::class, 'index'])->name('chauffeur.index');
 
 });
 

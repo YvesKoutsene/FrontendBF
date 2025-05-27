@@ -5,3 +5,4 @@ import './v1/main/fretintroduit';
 import './v1/main/tournee';
 import './v1/main/etape';
 import './v1/main/camion';
+import './v1/main/chauffeur';

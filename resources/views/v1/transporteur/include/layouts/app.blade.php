@@ -9,8 +9,7 @@
     <link rel="icon" type="image/x-icon" href="\assets/images/anaxar/logoanaxar.jpeg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" media="screen" href="\assets/css/perfect-scrollbar.min.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="\assets/css/style.css" />
     <link defer rel="stylesheet" type="text/css" media="screen" href="\assets/css/animate.css" />
@@ -38,8 +37,7 @@
         @click="$store.app.toggleSidebar()"></div>
 
     <!-- screen loader -->
-    <div
-        class="screen_loader animate__animated fixed inset-0 z-[60] grid place-content-center bg-[#fafafa] dark:bg-[#060818]">
+    <div class="screen_loader animate__animated fixed inset-0 z-[60] grid place-content-center bg-[#fafafa] dark:bg-[#060818]">
         <svg width="64" height="64" viewBox="0 0 135 135" xmlns="http://www.w3.org/2000/svg" fill="#4361ee">
             <path
                 d="M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z">
@@ -89,7 +87,6 @@
                 <!-- start main content section -->
                  @yield('content')
                  @vite(['resources/js/app.js', 'resources/css/app.css'])
-
                  @vite('resources/js/v1/pages/dashboard.js')
                  @include('v1.transporteur.include.partials.msg')
                  @stack('scripts')

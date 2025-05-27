@@ -89,20 +89,29 @@
                 </ul>
             </li>
 
-            <li class="nav-item">
-                <ul>
-                    <li class="nav-item">
-                        <a href="" class="group">
-                            <div class="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                                    fill="currentColor" class="bi bi-universal-access" viewBox="0 0 16 16">
-                                    <path
-                                        d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9z" />
-                                </svg>
-                                <span
-                                    class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Chauffeurs</span>
-                            </div>
-                        </a>
+            <li class="menu nav-item">
+                <button type="button" class="nav-link group" :class="{ 'active': activeDropdown === 'element0' }"
+                    @click="activeDropdown === 'element0' ? activeDropdown = null : activeDropdown = 'element0'">
+                    <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-universal-access" viewBox="0 0 16 16">
+                                <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6 5.5l-4.535-.442A.531.531 0 0 1 1.531 4H14.47a.531.531 0 0 1 .066 1.058L10 5.5V9l.452 6.42a.535.535 0 0 1-1.053.174L8.243 9.97c-.064-.252-.422-.252-.486 0l-1.156 5.624a.535.535 0 0 1-1.053-.174L6 9z" />
+                            </svg>
+                        <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Chauffeurs</span>
+                    </div>
+                    <div class="rtl:rotate-180" :class="{ '!rotate-90': activeDropdown === 'element1' }">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                </button>
+                <ul x-cloak x-show="activeDropdown === 'element0'" x-collapse class="sub-menu text-gray-500">
+                    <li>
+                        <a href="{{ route('chauffeur.index') }}">Mes chauffeurs</a>
+                    </li>
+                    <li>
+                        <a href="">Chauffeurs autos</a>
                     </li>
                 </ul>
             </li>
