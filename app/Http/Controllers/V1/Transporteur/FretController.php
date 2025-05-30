@@ -20,12 +20,16 @@ class FretController extends Controller
 
     // Fonction de renvoie de la liste des frets introduits
     public function index2() {
-        return view('v1.transporteur.page.fret.index2');
+        return view('v1.transporteur.page.fintroduit.index');
     }
 
     // Fonction de renvoie de la liste des propositions d'un fret
+    public function index3($keyfret) {
+        return view('v1.transporteur.page.pprix.index', compact('keyfret'));
+    }
+
     public function show2($keyfret) {
-        return view('v1.transporteur.page.fret.show2', compact('keyfret'));
+        return view('v1.transporteur.page.fintroduit.show', compact('keyfret'));
     }
 
 }

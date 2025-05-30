@@ -121,57 +121,79 @@ function renderPagination(total) {
 // Pour ajouter les étapes des tournées en cours d'un fret
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('addetape-form');
+    const submitBtn = document.getElementById('submit-etape');
+    const spinner = document.getElementById('spinner-etape');
+    const btnText = document.getElementById('text-etape');
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        const tourneesContainer = document.getElementById('tournees-container');
-        const blocks = tourneesContainer.querySelectorAll('div.space-y-5.border-b');
+            submitBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.textContent = 'Enregistrement...';
 
-        const groupedEtapes = new Map();
+            const tourneesContainer = document.getElementById('tournees-container');
+            const blocks = tourneesContainer.querySelectorAll('div.space-y-5.border-b');
 
-        blocks.forEach((block) => {
-            const tournee_id = block.querySelector('input[name="tournee_ids[]"]')?.value;
-            const position = block.querySelector('input[name="position[]"]')?.value;
-            const latitude = block.querySelector('input[name="latitude[]"]')?.value;
-            const longitude = block.querySelector('input[name="longitude[]"]')?.value;
+            const groupedEtapes = new Map();
 
-            if (tournee_id && position && latitude && longitude) {
-                const etape = {
-                    position,
-                    latitude: parseFloat(latitude),
-                    longitude: parseFloat(longitude)
-                };
+            blocks.forEach((block) => {
+                const tournee_id = block.querySelector('input[name="tournee_ids[]"]')?.value;
+                const position = block.querySelector('input[name="position[]"]')?.value;
+                const latitude = block.querySelector('input[name="latitude[]"]')?.value;
+                const longitude = block.querySelector('input[name="longitude[]"]')?.value;
 
-                if (!groupedEtapes.has(tournee_id)) {
-                    groupedEtapes.set(tournee_id, []);
+                if (tournee_id && position && latitude && longitude) {
+                    const etape = {
+                        position,
+                        latitude: parseFloat(latitude),
+                        longitude: parseFloat(longitude)
+                    };
+
+                    if (!groupedEtapes.has(tournee_id)) {
+                        groupedEtapes.set(tournee_id, []);
+                    }
+
+                    groupedEtapes.get(tournee_id).push(etape);
+                }
+            });
+
+            if (groupedEtapes.size === 0) {
+                showMessage('Veuillez remplir au moins une étape.', 'top-end', 'error');
+                submitBtn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.textContent = 'Enregistrer';
+                return;
+            }
+
+            try {
+                const donneesEtapes = Array.from(groupedEtapes.entries()).map(([tournee_id, etapes]) => ({
+                    tournee_id: parseInt(tournee_id),
+                    etapes
+                }));
+
+                const result = await storeEtapes(donneesEtapes);
+
+                if (result.success) {
+                    showMessage('Étapes enregistrées avec succès !');
+                    setTimeout(() => {
+                        form.reset();
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    showMessage(result.message || 'Erreur lors de l’enregistrement.', 'top-end', 'error');
                 }
 
-                groupedEtapes.get(tournee_id).push(etape);
+            } catch (error) {
+                showMessage('Une erreur est survenue lors de l’enregistrement.', 'top-end', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.textContent = 'Enregistrer';
             }
         });
-
-        if (groupedEtapes.size === 0) {
-            showMessage('Veuillez remplir au moins une étape.', 'top-end', 'error');
-            return;
-        }
-
-        const donneesEtapes = Array.from(groupedEtapes.entries()).map(([tournee_id, etapes]) => ({
-            tournee_id: parseInt(tournee_id),
-            etapes
-        }));
-        const result = await storeEtapes(donneesEtapes);
-
-        if (result.success) {
-            showMessage('Étapes enregistrées avec succès !');
-            setTimeout(() => {
-                form.reset();
-                window.location.reload();
-            }, 1500);
-        } else {
-            showMessage(result.message || 'Erreur lors de l’enregistrement.', 'top-end', 'error');
-        }
-    });
+    }
 });
 
 // Pour afficher quelques infos utiles de tournée

@@ -8,11 +8,12 @@
     `;
 
     function validateInput(input) {
-        input.value = input.value.replace(/[^0-9]/g, '');
-
-        if (input.value.length > 10) {
-            input.value = input.value.substring(0, 10);
+        let rawValue = input.value.replace(/\D/g, '');
+        if (rawValue.length > 12) {
+            rawValue = rawValue.substring(0, 12);
         }
+        const formattedValue = rawValue.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        input.value = formattedValue;
     }
 
     async function showAlertStart() {
@@ -48,7 +49,7 @@
                 currentProgressStep: 0,
             });
             if (!priceResult.value) return;
-            values.prix = parseFloat(priceResult.value);
+            values.prix = parseFloat(priceResult.value.replace(/\s/g, ''));
 
             // Étape 2 : Champ Commentaire
             const commentResult = await swalQueueStep.fire({
@@ -62,30 +63,55 @@
             });
             values.commentaire = commentResult.value || '';
 
-            // Étape 3 : Confirmation
             const confirmation = await Swal.fire({
-                title: 'Êtes-vous sûr de vouloir envoyer cette proposition ?',
-                padding: '2em',
-                confirmButtonText: 'Oui, continuer',
-                showCancelButton: true,
-                cancelButtonText: 'Annuler',
-                didOpen: () => {
-                    const confirmBtn = Swal.getConfirmButton();
-                    confirmBtn.style.cssText = warningButtonStyle;
-                }
-            });
+            title: 'Êtes-vous sûr de vouloir envoyer cette proposition ?',
+            padding: '2em',
+            confirmButtonText: 'Oui, continuer',
+            showCancelButton: true,
+            cancelButtonText: 'Annuler',
+            didOpen: () => {
+                const confirmBtn = Swal.getConfirmButton();
+                confirmBtn.style.cssText = warningButtonStyle;
+            },
+            preConfirm: async () => {
+                const btn = Swal.getConfirmButton();
+                btn.disabled = true;
+                btn.innerHTML = `
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="1.5" fill="none"
+                         stroke-linecap="round" stroke-linejoin="round"
+                         class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="12" y1="2" x2="12" y2="6"></line>
+                        <line x1="12" y1="18" x2="12" y2="22"></line>
+                        <line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line>
+                        <line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line>
+                        <line x1="2" y1="12" x2="6" y2="12"></line>
+                        <line x1="18" y1="12" x2="22" y2="12"></line>
+                        <line x1="4.93" y1="19.07" x2="7.76" y2="16.24"></line>
+                        <line x1="16.24" y1="7.76" x2="19.07" y2="4.93"></line>
+                    </svg>
+                `;
 
-            if (confirmation.isConfirmed) {
-                const result = await proposerPrixFret(keyfret, values);
-                await processData(values);
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Proposition envoyée avec succès !',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-                window.location.reload();
+                try {
+                    await proposerPrixFret(keyfret, values);
+                    await processData(values);
+                    return true;
+                } catch (error) {
+                    const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';
+                    Swal.showValidationMessage(message);
+                    return false;
+                }
             }
+        });
+
+        if (confirmation.isConfirmed) {
+            await Swal.fire({
+                icon: 'success',
+                title: 'Proposition envoyée avec succès !',
+                timer: 1500,
+                showConfirmButton: false
+            });
+            window.location.reload();
+        }
 
         } catch (error) {
             const message = error?.response?.data?.message || error.message || 'Une erreur est survenue.';

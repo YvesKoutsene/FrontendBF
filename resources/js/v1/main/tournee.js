@@ -347,9 +347,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 });
 
-// Pour l'enrégistrement d'une tournée
+// Pour enrégistrer une tournée
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('tournee-form');
+    const submitBtn = document.getElementById('submit-tournee');
+    const spinner = document.getElementById('spinner-tournee');
+    const btnText = document.getElementById('text-tournee');
+
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -367,6 +371,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 numerobl: form.querySelector('input[name="numerobl"]').value,
                 numeroconteneur: form.querySelector('input[name="numeroconteneur"]').value,
             };
+
+            submitBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            btnText.textContent = 'Enregistrement...';
 
             try {
                 const response = await store(fretKey, params);
@@ -393,8 +401,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 showMessage(messageErreur, 'top-end', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                spinner.classList.add('hidden');
+                btnText.textContent = 'Enregistrer';
             }
-
         });
     }
 });
@@ -409,79 +420,100 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const tournees = await fetchTourneeEncours(keyfret);
+    container.innerHTML = `
+        <div class="text-center py-10 text-gray-600 animate-pulse">
+            <p class="text-lg font-medium">Chargement des tournées...</p>
+        </div>`;
 
-    tournees.forEach((tournee, index) => {
-        const dateDepart = tournee.datedepart ? new Date(tournee.datedepart).toLocaleDateString('fr-FR') : '';
-        const dateArrivee = tournee.datearrivee ? new Date(tournee.datearrivee).toLocaleDateString('fr-FR') : '';
+    try {
+        const tournees = await fetchTourneeEncours(keyfret);
 
-        const html = `
-            <div class="space-y-5 border-b pb-6 p-4 bg-white rounded-xl shadow-xl">
-                <h5 class="text-lg font-semibold dark:text-white-light text-center">Tournée num. ${tournee.numerotournee}</h5>
-                <input type="hidden" name="tournee_ids[]" value="${tournee.id}">
+        container.innerHTML = '';
 
-                <h5 class="text-lg font-semibold dark:text-white-light">Informations sur la tournée</h5>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label>Départ prévue</label>
-                        <input type="text" class="form-input disabled:pointer-events-none" value="${dateDepart}" readonly />
-                        <input type="hidden" name="datedepart[]" value="${tournee.datedepart ?? ''}" />
-                    </div>
-                    <div>
-                        <label>Arrivée prévue</label>
-                        <input type="text" class="form-input disabled:pointer-events-none" value="${dateArrivee}" readonly />
-                        <input type="hidden" name="datearrivee[]" value="${tournee.datearrivee ?? ''}" />
-                    </div>
-                    <div>
-                        <label>Poids du chargement</label>
-                        <div class="flex">
-                            <div class="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-[#e0e6ed] dark:border-[#17263c] dark:bg-[#1b2e4b]">
-                                Kg
+        tournees.forEach((tournee) => {
+            const dateDepart = tournee.datedepart ? new Date(tournee.datedepart).toLocaleDateString('fr-FR') : '';
+            const dateArrivee = tournee.datearrivee ? new Date(tournee.datearrivee).toLocaleDateString('fr-FR') : '';
+
+            const html = `
+                <div class="space-y-5 border-b pb-6 p-4 bg-white rounded-xl shadow-xl">
+                    <h5 class="text-lg font-semibold dark:text-white-light text-center">Tournée num. ${tournee.numerotournee}</h5>
+                    <input type="hidden" name="tournee_ids[]" value="${tournee.id}">
+
+                    <h5 class="text-lg font-semibold dark:text-white-light">Informations sur la tournée</h5>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label>Départ prévue</label>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${dateDepart}" readonly />
+                            <input type="hidden" name="datedepart[]" value="${tournee.datedepart ?? ''}" />
+                        </div>
+                        <div>
+                            <label>Arrivée prévue</label>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${dateArrivee}" readonly />
+                            <input type="hidden" name="datearrivee[]" value="${tournee.datearrivee ?? ''}" />
+                        </div>
+                        <div>
+                            <label>Poids du chargement</label>
+                            <div class="flex">
+                                <div class="bg-[#eee] flex justify-center items-center ltr:rounded-l-md rtl:rounded-r-md px-3 font-semibold border ltr:border-r-0 rtl:border-l-0 border-[#e0e6ed] dark:border-[#17263c] dark:bg-[#1b2e4b]">
+                                    Kg
+                                </div>
+                                <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.poids ?? ''}" readonly />
+                                <input type="hidden" name="poids[]" value="${tournee.poids ?? ''}" />
                             </div>
-                            <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.poids ?? ''}" readonly />
-                            <input type="hidden" name="poids[]" value="${tournee.poids ?? ''}" />
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                            <label>Camion</label>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.camion_actif[0]?.plaque1 || ''}/${tournee.camion_actif[0]?.plaque2 || ''}" readonly />
+                            <input type="hidden" name="camion_actif[]" value="${tournee.camion_actif[0]?.id || ''}" />
+                        </div>
+                        <div>
+                            <label>Chauffeur</label>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.chauffeur_actif[0]?.nom || ''} ${tournee.chauffeur_actif[0]?.prenom || ''}" readonly />
+                            <input type="hidden" name="chauffeur_actif[]" value="${tournee.chauffeur_actif[0]?.id|| ''}" />
+                        </div>
+                        <div>
+                            <label>Position actuelle</label>
+                            <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.derniere_etape.position ?? ''}" readonly />
+                            <input type="hidden" name="etape[]" value="${tournee.derniere_etape.position ?? ''}" />
+                        </div>
+                    </div>
+                    <h5 class="text-lg font-semibold dark:text-white-light">Nouvelle étape</h5>
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div class="md:col-span-2">
+                            <label>Position<span class="text-danger">*</span></label>
+                            <input type="text" name="position[]" placeholder="Ex: Nukafu" class="form-input"/>
+                        </div>
+                        <div>
+                            <label>Latitude<span class="text-danger">*</span></label>
+                            <input type="text" name="latitude[]" placeholder="Ex: 6.12298" class="form-input"/>
+                        </div>
+                        <div>
+                            <label>Longitude<span class="text-danger">*</span></label>
+                            <input type="text" name="longitude[]" placeholder="Ex: 1.206709" class="form-input" />
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div>
-                        <label>Camion</label>
-                        <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.camion_actif[0]?.plaque1 || ''}/${tournee.camion_actif[0]?.plaque2 || ''}" readonly />
-                        <input type="hidden" name="camion_actif[]" value="${tournee.camion_actif[0]?.id || ''}" />
-                    </div>
-                    <div>
-                        <label>Chauffeur</label>
-                        <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.chauffeur_actif[0]?.nom || ''} ${tournee.chauffeur_actif[0]?.prenom || ''}" readonly />
-                        <input type="hidden" name="chauffeur_actif[]" value="${tournee.chauffeur_actif[0]?.id|| ''}" />
-                    </div>
-                 <div>
-                        <label>Position actuelle</label>
-                        <input type="text" class="form-input disabled:pointer-events-none" value="${tournee.derniere_etape.position ?? ''}" readonly />
-                        <input type="hidden" name="etape[]" value="${tournee.derniere_etape.position ?? ''}" />
-                    </div>
-                </div>
-                <h5 class="text-lg font-semibold dark:text-white-light">Nouvelle étape</h5>
-                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="md:col-span-2">
-                        <label>Position<span class="text-danger">*</span></label>
-                        <input type="text" name="position[]" placeholder="Ex: Nukafu" class="form-input"/>
-                    </div>
-                    <div>
-                        <label>Latitude<span class="text-danger">*</span></label>
-                        <input type="text" name="latitude[]" placeholder="Ex: 6.12298" class="form-input"/>
-                    </div>
-                    <div>
-                        <label>Longitude<span class="text-danger">*</span></label>
-                        <input type="text" name="longitude[]" placeholder="Ex: 1.206709" class="form-input" />
-                    </div>
-                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', html);
+        });
+        if (tournees.length === 0) {
+            container.innerHTML = `
+                <div class="text-center py-10 text-gray-600">
+                    <p class="text-lg font-medium">Aucune tournée en cours.</p>
+                </div>`;
+        }
 
-            </div>
-        `;
-
-        container.insertAdjacentHTML('beforeend', html);
-    });
+    } catch (error) {
+        console.error("Erreur lors du chargement des tournées :", error);
+        container.innerHTML = `
+            <div class="text-center py-10 text-red-600">
+                <p class="text-lg font-medium">Erreur lors du chargement des tournées.</p>
+            </div>`;
+    }
 });
+
 
 // Pour afficher quelques informations utiles du fret
 document.addEventListener('DOMContentLoaded', async () => {
@@ -528,14 +560,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const nombreTourneesEnCours = tournees.filter(t => t.statut === 20).length;
     const nombreCamions = fret?.nombrecamions ?? 0;
 
-    if (nombreTournees >= nombreCamions) {
-        btnCreerTournee.classList.add('disabled', 'opacity-50', 'pointer-events-none');
-        btnCreerTournee.setAttribute('title', 'Toutes les tournées ont déjà été créées.');
+    if (nombreTournees < nombreCamions) {
+        btnCreerTournee.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
+        btnCreerTournee.removeAttribute('title');
     }
 
-    if (nombreTournees === 0 || nombreTourneesEnCours === 0) {
-        btnAjouterEtape.classList.add('disabled', 'opacity-50', 'pointer-events-none');
-        btnAjouterEtape.setAttribute('title', 'Aucune tournée en cours disponible.');
+    if (nombreTournees > 0 && nombreTourneesEnCours > 0) {
+        btnAjouterEtape.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
+        btnAjouterEtape.removeAttribute('title');
     }
 });
+
+
 

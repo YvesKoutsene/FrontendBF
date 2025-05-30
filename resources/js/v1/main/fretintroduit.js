@@ -96,7 +96,7 @@ function renderFretsByGroup(groupKey, filterFn) {
                 <td>${fret.poidsmarchandise}</td>
                 <td class="text-center">
                     <div class="flex justify-center gap-2">
-                        <a href="/v1/espace/transporteur/frets/details/${fret.keyfret}" class="btn btn-sm btn-outline-info" title="Voir les détails">
+                        <a href="/v1/espace/transporteur/frets/introduits/details/${fret.keyfret}" class="btn btn-sm btn-outline-info" title="Voir les détails">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                                   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -154,7 +154,6 @@ document.querySelectorAll('.tab-button').forEach(btn => {
     });
 });
 // Fin
-
 
 // Pour afficher les propositions de prix d'un fret introduit
 // Debut
@@ -232,7 +231,7 @@ function afficherPropositionsDansLeDOM(propositions) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${start + index + 1}</td>
-            <td>${proposition.prix}</td>
+            <td>${Number(proposition.prix).toLocaleString('fr-FR')}</td>
             <td>${proposition.commentaire || 'N/A'}</td>
             <td>${getStatutBadge(proposition.statut)}</td>
             <td>${formattedDate}</td>
@@ -310,7 +309,6 @@ function getStatutBadge(statut) {
 
     return `<span class="text-xs font-medium px-2 py-1 rounded ${colorClass}">${label}</span>`;
 }
-
 // Fin
 
 // Pour l'affichage du titre propositions du fret
@@ -330,19 +328,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 // Pour faire une proposition de prix
 window.proposerPrixFret = proposerPrixFret;
 
+// Pour l'affichage du bouton proposition prix
 document.addEventListener('DOMContentLoaded', async () => {
     const keyfret = window.keyfret;
     const { propositions } = await fetchPropositionsFret(keyfret);
 
     const btnFaireProposition = document.getElementById('btnFaireProposition');
 
-    const propositionEnCoursOuAcceptee = propositions.some(proposition =>
+    const propositionStatut0ou1 = propositions.some(proposition =>
         proposition.statut === 0 || proposition.statut === 1
     );
 
-    if (propositionEnCoursOuAcceptee) {
-        btnFaireProposition.classList.add('disabled', 'opacity-50', 'pointer-events-none');
-        btnFaireProposition.setAttribute('title', 'Fret en cours d\'examen.');
+    if (!propositionStatut0ou1) {
+        btnFaireProposition.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
+        btnFaireProposition.removeAttribute('title'); // Supprimer le titre
     }
 });
-

@@ -16,8 +16,8 @@
                     <div id="fretshow-container" class="space-y-5">
                     </div>
                     <div class="flex space-x-4 justify-end items-end mt-6">
-                        <a href="{{ route('tournee.index',$keyfret) }}" class="btn btn-warning">
-                            Voir Tournées
+                        <a href="{{ route('fret.propostions',$keyfret) }}" class="btn btn-warning">
+                            Voir Propositions
                         </a>
                     </div>
                 </div>

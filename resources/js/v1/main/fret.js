@@ -233,20 +233,3 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
     `;
 });
-
-// Pour le controle du bouton voir tournées de la page détails
-document.addEventListener('DOMContentLoaded', async () => {
-    const keyfret = window.keyfret;
-    const { fret } = await showFret(keyfret);
-
-    const btnVoirTournee = document.getElementById('btnVoirTournee');
-
-    // Vérifie le statut du fret
-    if (fret.statut === 20) {
-        btnVoirTournee.classList.add('disabled', 'opacity-50', 'pointer-events-none');
-        btnVoirTournee.setAttribute('title', 'Fret non attribué.');
-    } else {
-        btnVoirTournee.classList.remove('disabled', 'opacity-50', 'pointer-events-none');
-        btnVoirTournee.removeAttribute('title');
-    }
-});

@@ -41,6 +41,7 @@ Route::prefix('/v1/espace/transporteur')->group(function () {
 
     // Route de renvoie de détails d'un fret
     Route::get('/frets/details/{key}', [FretController::class, 'show'])->name('fret.show');
+    Route::get('/frets/introduits/details/{key}', [FretController::class, 'show2'])->name('fintroduit.show');
 
     // Route de renvoie de la page des tournees
     Route::get('/tournees-fret/{keyfret}', [TourneeController::class, 'index'])->name('tournee.index');
@@ -58,7 +59,7 @@ Route::prefix('/v1/espace/transporteur')->group(function () {
     Route::get('/frets/introduits', [FretController::class, 'index2'])->name('fret.introduits');
 
     // Route de renvoie des propostions de prix d'un fret
-    Route::get('/frets/introduits/propostions-prix/{keyfret}', [FretController::class, 'show2'])->name('fret.propostions');
+    Route::get('/frets/introduits/propostions-prix/{keyfret}', [FretController::class, 'index3'])->name('fret.propostions');
 
     // Route de renvoie de la page des camions
     Route::get('/mescamions', [CamionController::class, 'index'])->name('camions.index');

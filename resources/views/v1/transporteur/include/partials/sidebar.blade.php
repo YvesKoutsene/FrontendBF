@@ -17,10 +17,10 @@
                 </svg>
             </a>
         </div>
-        <ul class="perfect-scrollbar relative h-[calc(100vh-80px)] space-y-0.5 overflow-y-auto overflow-x-hidden p-4 py-0 font-semibold"
-            x-data="{ activeDropdown: 'dashboard' }">
+        <ul class="perfect-scrollbar relative h-[calc(100vh-80px)] space-y-0.5 overflow-y-auto overflow-x-hidden p-4 py-0 font-semibold" x-data="{ activeDropdown: 'dashboard' }">
+
             <li class="menu nav-item">
-                <button type="button" class="nav-link group" :class="{ 'active': activeDropdown === 'dashboard' }" @click="activeDropdown === 'dashboard' ? activeDropdown = null : activeDropdown = 'dashboard'">
+                <a href="{{ route('dashboard') }}" class="nav-link group">
                     <div class="flex items-center">
                         <svg class="shrink-0 group-hover:!text-warning" width="20" height="20"
                             viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -31,22 +31,7 @@
                         </svg>
                         <span class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Tableau de bord</span>
                     </div>
-                    <div class="rtl:rotate-180" :class="{ '!rotate-90': activeDropdown === 'dashboard' }">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9 5L15 12L9 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                </button>
-                <ul x-cloak x-show="activeDropdown === 'dashboard'" x-collapse class="sub-menu text-gray-500">
-                    <li>
-                        <a href="{{ route('dashboard') }}" class="active">Acceuil 01</a>
-                    </li>
-                    <li>
-                        <a href="">Acceuil 02</a>
-                    </li>
-                </ul>
+                </a>
             </li>
 
             <h2
@@ -108,10 +93,10 @@
                 </button>
                 <ul x-cloak x-show="activeDropdown === 'element0'" x-collapse class="sub-menu text-gray-500">
                     <li>
-                        <a href="{{ route('chauffeur.index') }}">Mes chauffeurs</a>
+                        <a href="{{ route('chauffeur.index') }}">Personnels</a>
                     </li>
                     <li>
-                        <a href="">Chauffeurs autos</a>
+                        <a href="">Autonomes</a>
                     </li>
                 </ul>
             </li>
@@ -135,10 +120,10 @@
                 </button>
                 <ul x-cloak x-show="activeDropdown === 'element1'" x-collapse class="sub-menu text-gray-500">
                     <li>
-                        <a href="{{ route('camions.index') }}">Mes camions</a>
+                        <a href="{{ route('camions.index') }}">Personnels</a>
                     </li>
                     <li>
-                        <a href="">Camions chauffeurs</a>
+                        <a href="">Chauffeurs</a>
                     </li>
                 </ul>
             </li>
@@ -153,7 +138,7 @@
                                 d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
                         </svg>
                         <span
-                            class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Paramètre</span>
+                            class="text-black ltr:pl-3 rtl:pr-3 dark:text-[#506690] dark:group-hover:text-white-dark">Paramètres</span>
                     </div>
                     <div class="rtl:rotate-180" :class="{ '!rotate-90': activeDropdown === 'elements' }">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -165,7 +150,7 @@
                 </button>
                 <ul x-cloak x-show="activeDropdown === 'elements'" x-collapse class="sub-menu text-gray-500">
                     <li>
-                        <a href="">Mon compte</a>
+                        <a href="">Compte</a>
                     </li>
                     <li>
                         <a href="">Profils</a>

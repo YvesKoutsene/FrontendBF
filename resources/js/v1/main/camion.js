@@ -85,7 +85,7 @@ function renderCamionsByGroup(groupKey, filterFn) {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${start + index + 1}</td>
-                <td>${camion.plaque1}/${camion.plaque2}</td>
+                <td>${camion.plaque1}/${camion.plaque2 || ''}</td>
                 <td>${camion.formecamion}</td>
                 <td>${camion.poidsvide}</td>
                 <td>${camion.poidsmax}</td>
