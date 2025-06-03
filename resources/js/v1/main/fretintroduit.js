@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupControls();
     renderAllGroups();
 
-    // Gestion des onglets
     document.querySelectorAll('[data-isdemande]').forEach(tab => {
         tab.addEventListener('click', () => {
             document.querySelectorAll('[data-isdemande]').forEach(t => t.classList.remove('active'));
@@ -96,6 +95,14 @@ function renderFretsByGroup(groupKey, filterFn) {
                 <td>${fret.poidsmarchandise}</td>
                 <td class="text-center">
                     <div class="flex justify-center gap-2">
+                        ${fret.statut === 20 && fret.isdemande === 9 ? `
+                            <button type="button" class="btn btn-sm btn-outline-warning" title="Valider ce fret">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                                    <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                                    <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                                </svg>
+                            </button>
+                        ` : ''}
                         <a href="/v1/espace/transporteur/frets/introduits/details/${fret.keyfret}" class="btn btn-sm btn-outline-info" title="Voir les détails">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
@@ -118,7 +125,7 @@ function renderFretsByGroup(groupKey, filterFn) {
 
     renderPaginationForGroup(groupKey, total);
 }
-// Pour la pagination
+
 function renderPaginationForGroup(groupKey, total) {
     const totalPages = Math.ceil(total / entriesPerPage);
     const container = document.getElementById(`${groupKey}-pagination`);
@@ -142,7 +149,6 @@ function renderPaginationForGroup(groupKey, total) {
         container.appendChild(btn);
     }
 }
-// Pour les tab onglets
 document.querySelectorAll('.tab-button').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-button').forEach(b => {
@@ -187,7 +193,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 });
 
-// Affichage des propositions
 function afficherPropositionsDansLeDOM(propositions) {
     const tbody = document.getElementById('propositions-body');
     tbody.innerHTML = '';
@@ -240,10 +245,8 @@ function afficherPropositionsDansLeDOM(propositions) {
                     ${proposition.statut === 2 ? `
                        <a href="javascript:void(0)" class="btn btn-sm btn-outline-info" title="Voir motif refus" onclick="voirRaisonRefus(this)"
                            data-raisonrefus="${proposition.raisonrefus || 'Aucune raison précisée'}">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-chat-dots" viewBox="0 0 16 16">
-                             <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2
-                                      1 1 0 0 0 0 2"/>
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots" viewBox="0 0 16 16">
+                             <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                              <path d="m2.165 15.803.02-.004c1.83-.363 2.948-.842 3.468-1.105A9 9 0 0 0 8 15c4.418 0
                                       8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6a10.4 10.4 0 0 1-.524
                                       2.318l-.003.011a11 11 0 0 1-.244.637c-.079.186.074.394.273.362a22 22 0 0 0 .693-.125m.8-3.108a1

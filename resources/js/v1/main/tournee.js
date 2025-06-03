@@ -5,7 +5,6 @@ import { fetchTournees } from '../api/tournees';
 import { showMessage } from '../pages/notif';
 
 // Pour la récupération des tournées d'un fret
-// --- Configuration ---
 let allTournees = [];
 let searchQuery = "";
 let entriesPerPage = 10;
@@ -14,7 +13,7 @@ let pagination = {
     statut20: 1,
     statut30: 1
 };
-// --- Initialisation principale ---
+
 document.addEventListener('DOMContentLoaded', async () => {
     const keyfret = window.keyfret;
     const container = document.getElementById('tournees-container');
@@ -31,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     setupTabs();
     renderAllGroups();
 });
-// --- Configuration des contrôles (pagination + recherche) ---
+
 function setupControls() {
     document.getElementById('entries-select')?.addEventListener('change', e => {
         entriesPerPage = parseInt(e.target.value);
@@ -49,7 +48,7 @@ function setupControls() {
 function resetPagination() {
     for (let key in pagination) pagination[key] = 1;
 }
-// --- Gestion des onglets ---
+
 function setupTabs() {
     document.querySelectorAll('[data-statut]').forEach(tab => {
         tab.addEventListener('click', () => {
@@ -73,13 +72,13 @@ function setupTabs() {
         });
     });
 }
-// --- Rendu de toutes les sections (statuts) ---
+
 function renderAllGroups() {
     renderTourneesByGroup('statut10', tournee => tournee.statut === 10);
     renderTourneesByGroup('statut20', tournee => tournee.statut === 20);
     renderTourneesByGroup('statut30', tournee => tournee.statut === 30);
 }
-// --- Rendu d'une section spécifique ---
+
 function renderTourneesByGroup(groupKey, filterFn) {
     const tbody = document.getElementById(`${groupKey}-body`);
     const paginationContainer = document.getElementById(`${groupKey}-pagination`);
@@ -88,8 +87,6 @@ function renderTourneesByGroup(groupKey, filterFn) {
     tbody.innerHTML = '';
 
     let filtered = allTournees.filter(filterFn);
-
-    // Recherche
     if (searchQuery) {
         filtered = filtered.filter(t =>
             t.numerotournee?.toLowerCase().includes(searchQuery) ||
@@ -108,21 +105,18 @@ function renderTourneesByGroup(groupKey, filterFn) {
         );
     }
 
-    // Pagination
     const total = filtered.length;
     const currentPage = pagination[groupKey];
     const start = (currentPage - 1) * entriesPerPage;
     const end = start + entriesPerPage;
     const currentTournees = filtered.slice(start, end);
 
-    // Aucune donnée
     if (currentTournees.length === 0) {
         tbody.innerHTML = '<tr><td colspan="12" class="text-center">Aucune tournée trouvée.</td></tr>';
         renderPaginationForGroup(groupKey, total);
         return;
     }
 
-    // Formatage des dates
     const formatDate = dateStr => {
         if (!dateStr) return '';
         const d = new Date(dateStr);
@@ -251,7 +245,6 @@ function renderTourneesByGroup(groupKey, filterFn) {
 
     renderPaginationForGroup(groupKey, total);
 }
-// --- Rendu de la pagination ---
 function renderPaginationForGroup(groupKey, total) {
     const totalPages = Math.ceil(total / entriesPerPage);
     const container = document.getElementById(`${groupKey}-pagination`);

@@ -15,7 +15,7 @@ export async function fetchFretsAttribues() {
         }
 
         // Appel à l'API pour récupérer les frets attribués
-        const response = await fetch(`${API_BASE_URL}/frets-attribues/${keytransporteur}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/frets-attribues/${keytransporteur}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -73,7 +73,7 @@ export async function showFret($keyfret) {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/frets-attribues/show/${keyfret}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/frets-attribues/show/${keyfret}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`,

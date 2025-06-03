@@ -11,7 +11,7 @@ export async function fetchFretsIntroduits() {
         }
 
         // Appel à l'API pour récupérer les frets introduits
-        const response = await fetch(`${API_BASE_URL}/frets-introduits`, {
+        const response = await fetch(`${API_BASE_URL}/aft/frets-introduits`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -63,7 +63,7 @@ export async function fetchPropositionsFret($keyfret) {
             return { propositions: [] };
         }
 
-        const response = await fetch(`${API_BASE_URL}/frets-introduits/propositions-prix/${keyfret}`, {
+        const response = await fetch(`${API_BASE_URL}/aft/frets-introduits/propositions-prix/${keyfret}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -125,7 +125,7 @@ export async function proposerPrixFret(keyfret, params) {
     };
 
     try {
-        const response = await fetch(`${API_BASE_URL}/frets-introduits/propositions-prix/store/${keyfret}`, {
+        const response = await fetch(`${API_BASE_URL}/aft/frets-introduits/propositions-prix/store/${keyfret}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`,

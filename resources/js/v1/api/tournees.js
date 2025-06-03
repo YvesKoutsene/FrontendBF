@@ -10,7 +10,7 @@ export async function fetchTournees(keyfret) {
             return { tournees: [], fret: null };
         }
 
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/${keyfret}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/${keyfret}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -70,7 +70,7 @@ export async function getRessourcesDisponibles() {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/disponibilites/${keytransporteur}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/disponibilites/${keytransporteur}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -101,7 +101,7 @@ export async function store(fretKey, params) {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/store/${fretKey}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/store/${fretKey}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -142,7 +142,7 @@ export async function fetchTourneeEncours(keyfret) {
         }
 
         // Appel à l'API pour récupérer les tournées en cours du fret
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/en-cours/${keyfret}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/en-cours/${keyfret}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,

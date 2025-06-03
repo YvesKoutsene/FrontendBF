@@ -3,7 +3,7 @@ import { API_BASE_URL } from './config.js';
 // Pour la connexion
 export async function connexion(email, motdepasse) {
     try {
-        const response = await fetch(`${API_BASE_URL}/connexion`, {
+        const response = await fetch(`${API_BASE_URL}/trans/connexion`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export async function deconnexion() {
             throw new Error('Aucun token trouvé.');
         }
 
-        const response = await fetch(`${API_BASE_URL}/deconnexion`, {
+        const response = await fetch(`${API_BASE_URL}/trans/deconnexion`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

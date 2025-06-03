@@ -15,7 +15,7 @@ export async function fetchCamions() {
         }
 
         // Appel à l'API pour récupérer les camions du transporteur
-        const response = await fetch(`${API_BASE_URL}/mes-camions/${keytransporteur}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/mes-camions/${keytransporteur}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,

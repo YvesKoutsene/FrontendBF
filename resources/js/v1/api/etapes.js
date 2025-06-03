@@ -10,7 +10,7 @@ export async function demarrerTournee(keytournee, params) {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/demarrer/${keytournee}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/demarrer/${keytournee}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -50,7 +50,7 @@ export async function cloturerTournee(keytournee, params) {
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/cloturer/${keytournee}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/cloturer/${keytournee}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -90,7 +90,7 @@ export async function fetchEtapesTournee($keytournee) {
             return { etapes: [], tournee: null };
         }
 
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/index/${keytournee}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/etapes/index/${keytournee}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
@@ -149,7 +149,7 @@ export async function storeEtapes(donneesEtapes) {
             };
         }
 
-        const response = await fetch(`${API_BASE_URL}/tournees-fret/etapes/store`, {
+        const response = await fetch(`${API_BASE_URL}/trans/tournees-fret/etapes/store`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + authToken,

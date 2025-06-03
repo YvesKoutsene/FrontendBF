@@ -15,7 +15,7 @@ export async function fetchChauffeurs() {
         }
 
         // Appel à l'API pour récupérer les chauffeurs du transporteur
-        const response = await fetch(`${API_BASE_URL}/mes-chauffeurs/${keytransporteur}`, {
+        const response = await fetch(`${API_BASE_URL}/trans/mes-chauffeurs/${keytransporteur}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + authToken,
